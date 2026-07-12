@@ -1,0 +1,44 @@
+# Abhängigkeiten
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+ios/
+android/
+
+# Metro
+.metro-health-check*
+
+# Umgebungsvariablen / Geheimnisse (NIE committen!)
+.env
+.env.local
+.env.*.local
+
+# Logs / Debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
+
+# Tests / Coverage
+coverage/
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/

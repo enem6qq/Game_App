@@ -1,0 +1,60 @@
+{
+  "common": {
+    "appName": "App Vorlage",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "add": "Hinzufügen",
+    "loading": "Lädt…",
+    "retry": "Erneut versuchen",
+    "error": "Es ist ein Fehler aufgetreten"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "logout": "Abmelden",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "forgotPassword": "Passwort vergessen?",
+    "noAccount": "Noch kein Konto? Jetzt registrieren",
+    "haveAccount": "Bereits ein Konto? Anmelden",
+    "resetPassword": "Passwort zurücksetzen",
+    "resetSent": "Wir haben dir eine E-Mail zum Zurücksetzen geschickt.",
+    "welcomeBack": "Willkommen zurück"
+  },
+  "tabs": {
+    "home": "Start",
+    "items": "Einträge",
+    "profile": "Profil",
+    "settings": "Einstellungen"
+  },
+  "items": {
+    "title": "Einträge",
+    "empty": "Noch keine Einträge. Lege deinen ersten an!",
+    "newItem": "Neuer Eintrag",
+    "name": "Bezeichnung",
+    "description": "Beschreibung",
+    "created": "Eintrag erstellt",
+    "updated": "Eintrag aktualisiert",
+    "deleted": "Eintrag gelöscht"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "appearance": "Darstellung",
+    "theme": "Design",
+    "themeSystem": "System",
+    "themeLight": "Hell",
+    "themeDark": "Dunkel",
+    "language": "Sprache",
+    "account": "Konto",
+    "billing": "Abonnement"
+  },
+  "billing": {
+    "title": "Abonnement",
+    "upgrade": "Auf Pro upgraden",
+    "manage": "Abonnement verwalten",
+    "free": "Kostenlos",
+    "pro": "Pro"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "common": {
+    "appName": "App Template",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "loading": "Loading…",
+    "retry": "Retry",
+    "error": "Something went wrong"
+  },
+  "auth": {
+    "login": "Sign in",
+    "register": "Sign up",
+    "logout": "Sign out",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "No account yet? Sign up",
+    "haveAccount": "Already have an account? Sign in",
+    "resetPassword": "Reset password",
+    "resetSent": "We sent you a reset email.",
+    "welcomeBack": "Welcome back"
+  },
+  "tabs": {
+    "home": "Home",
+    "items": "Items",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "items": {
+    "title": "Items",
+    "empty": "No items yet. Create your first one!",
+    "newItem": "New item",
+    "name": "Name",
+    "description": "Description",
+    "created": "Item created",
+    "updated": "Item updated",
+    "deleted": "Item deleted"
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "themeSystem": "System",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "language": "Language",
+    "account": "Account",
+    "billing": "Subscription"
+  },
+  "billing": {
+    "title": "Subscription",
+    "upgrade": "Upgrade to Pro",
+    "manage": "Manage subscription",
+    "free": "Free",
+    "pro": "Pro"
+  }
+}
