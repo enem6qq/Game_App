@@ -62,6 +62,9 @@ type GameStore = {
   purchaseBlessing: (blessing: BlessingId) => void;
   setIslandName: (name: string) => void;
 
+  /** Kompletten Spielstand ersetzen (Cloud-Laden). */
+  replaceState: (state: GameState) => void;
+
   dismissError: () => void;
   dismissExpeditionResult: () => void;
   dismissHuntResult: () => void;
@@ -146,6 +149,15 @@ export const useGameStore = create<GameStore>()(
           apply(buyBlessing(get().state, blessing, Date.now())),
 
         setIslandName: (name) => apply(renameIsland(get().state, name)),
+
+        replaceState: (state) =>
+          set({
+            state,
+            lastError: null,
+            lastExpeditionResult: null,
+            lastHuntResult: null,
+            offlineSummary: null,
+          }),
 
         dismissError: () => set({ lastError: null }),
         dismissExpeditionResult: () => set({ lastExpeditionResult: null }),

@@ -24,7 +24,7 @@ import {
 import { useGameStore } from '@/features/game/store';
 import { useTheme } from '@/theme/ThemeProvider';
 
-import { GliderSprite, Villager, type VillagerVariant } from './characters';
+import { Villager, type VillagerVariant } from './characters';
 import { skyGradient } from './sky';
 
 /**

@@ -98,6 +98,19 @@ npm run format     # Code automatisch formatieren
 
 ---
 
+## 📦 Als echte App aufs Handy (ohne Expo Go)
+
+Siehe [`docs/release.md`](docs/release.md) – mit `eas build` entsteht in
+~15 Minuten eine installierbare Android-APK mit eigenem Icon.
+
+## ☁️ Cloud-Spielstand aktivieren (optional)
+
+1. Kostenloses Projekt auf [supabase.com](https://supabase.com) anlegen
+2. `supabase/migrations/0001_init.sql` und `0002_game_saves.sql` im
+   SQL-Editor ausführen
+3. URL + Anon-Key in `.env` eintragen (siehe `.env.example`)
+4. In der App registrieren/anmelden → im Profil erscheint „Cloud-Spielstand"
+
 ## 🗺️ Roadmap
 
 1. Cloud-Spielstand über Supabase (Konto-Login ist schon vorbereitet)

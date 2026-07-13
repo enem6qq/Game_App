@@ -38,6 +38,7 @@ export type Database = {
           avatar_url?: string | null;
           role?: UserRole;
         };
+        Relationships: [];
       };
       items: {
         Row: {
@@ -61,6 +62,24 @@ export type Database = {
           description?: string | null;
           updated_at?: string;
         };
+        Relationships: [];
+      };
+      game_saves: {
+        Row: {
+          user_id: string;
+          state: unknown;
+          updated_at: string;
+        };
+        Insert: {
+          user_id: string;
+          state: unknown;
+          updated_at?: string;
+        };
+        Update: {
+          state?: unknown;
+          updated_at?: string;
+        };
+        Relationships: [];
       };
     };
     Views: Record<string, never>;

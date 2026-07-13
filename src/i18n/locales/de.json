@@ -411,12 +411,32 @@
       "huntWon": "Bestie besiegt: {{beast}}!",
       "huntLost": "Jagd auf {{beast}} gescheitert."
     },
+    "notifications": {
+      "buildTitle": "Ausbau fertig! 🏗️",
+      "buildBody": "{{building}} hat Stufe {{level}} erreicht.",
+      "expeditionTitle": "Expedition zurück! 🪂",
+      "expeditionBody": "Deine Gleiter sind aus {{tier}} zurück – ein Ereignis wartet.",
+      "huntTitle": "Der Kampf ist geschlagen! ⚔️",
+      "huntBody": "Die Jagd auf {{beast}} ist vorbei – sieh dir den Bericht an."
+    },
     "offline": {
       "title": "Willkommen zurück!",
       "away": "Du warst {{duration}} fort. Deine Insel war fleißig:",
       "builds": "{{count}} Ausbau(ten) fertiggestellt",
       "expeditions": "{{count}} Expedition(en) zurückgekehrt",
       "continue": "Weiter geht's"
+    },
+    "cloud": {
+      "title": "Cloud-Spielstand",
+      "hint": "Sichere deinen Spielstand online oder hole ihn auf ein neues Gerät. Geladen wird nur nach Bestätigung.",
+      "save": "In die Cloud sichern",
+      "load": "Aus der Cloud laden",
+      "savedTitle": "Gesichert ☁️",
+      "savedMessage": "Dein Spielstand liegt jetzt sicher in der Cloud.",
+      "noSave": "In der Cloud liegt noch kein Spielstand.",
+      "loadTitle": "Cloud-Spielstand laden?",
+      "loadMessage": "Dein aktueller lokaler Spielstand wird dabei ersetzt. Fortfahren?",
+      "loadConfirm": "Ja, laden"
     },
     "profile": {
       "islandName": "Name deiner Insel",

@@ -411,12 +411,32 @@
       "huntWon": "Beast defeated: {{beast}}!",
       "huntLost": "Hunt for {{beast}} failed."
     },
+    "notifications": {
+      "buildTitle": "Construction finished! 🏗️",
+      "buildBody": "{{building}} has reached level {{level}}.",
+      "expeditionTitle": "Expedition returned! 🪂",
+      "expeditionBody": "Your gliders are back from {{tier}} – an event awaits.",
+      "huntTitle": "The battle is over! ⚔️",
+      "huntBody": "The hunt for {{beast}} has ended – check the report."
+    },
     "offline": {
       "title": "Welcome back!",
       "away": "You were away for {{duration}}. Your island kept busy:",
       "builds": "{{count}} construction(s) finished",
       "expeditions": "{{count}} expedition(s) returned",
       "continue": "Carry on"
+    },
+    "cloud": {
+      "title": "Cloud save",
+      "hint": "Back up your progress online or fetch it on a new device. Loading always asks first.",
+      "save": "Save to cloud",
+      "load": "Load from cloud",
+      "savedTitle": "Saved ☁️",
+      "savedMessage": "Your progress is now safely stored in the cloud.",
+      "noSave": "There is no save in the cloud yet.",
+      "loadTitle": "Load cloud save?",
+      "loadMessage": "Your current local progress will be replaced. Continue?",
+      "loadConfirm": "Yes, load"
     },
     "profile": {
       "islandName": "Name of your island",
