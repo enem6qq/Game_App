@@ -23,6 +23,12 @@ Das komplette Spieldesign (Welt, Systeme, Balancing-Formeln) steht in
 - 🪂 **Expeditionen mit Geschichten:** Jede Rückkehr endet in einem von
   zehn handgeschriebenen Ereignissen mit Entscheidungen – vorsichtig,
   mutig oder neugierig?
+- ⚔️ **Bestienjagd:** Nebelschlange, Sturmrok und Wolkenleviathan fordern
+  den Gleitertrupp zum Kampf – mit Kampfkraft, Risikoeinschätzung und
+  Kampfbericht.
+- 🎨 **Lebendige Inselszene:** Selbst gezeichnete Vektorgrafik; der Himmel
+  folgt der echten Uhrzeit und dem Spielwetter, gebaute Gebäude erscheinen
+  auf der Insel.
 - 🕰️ **Offline-Fortschritt:** Die Insel arbeitet bis zu 8 Stunden weiter;
   Wetterwechsel während der Abwesenheit werden **fensterweise exakt**
   angerechnet.

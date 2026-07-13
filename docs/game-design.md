@@ -108,9 +108,29 @@ Expeditions-Seed deterministisch, aber vorher nicht ablesbar.
 
 ---
 
+## ⚔️ Bestienjagd (Kämpfe)
+
+Ab Wachtturm Stufe 2 lassen sich **Himmelsbestien** stellen – die
+Kampf-Schiene des Spiels:
+
+| Bestie             | Dauer  | Gleiter | Kraft | Wachtturm |
+| ------------------ | ------ | ------- | ----- | --------- |
+| 🐍 Nebelschlange   | 30 min | 5       | 55    | Stufe 2   |
+| 🦅 Sturmrok        | 2 h    | 12      | 150   | Stufe 4   |
+| 🐋 Wolkenleviathan | 6 h    | 22      | 300   | Stufe 6   |
+
+- **Kampfkraft:** Jeder Gleiter kämpft mit `10 + 2 × (Werft−1)` Kraft.
+  Die Werft auszubauen stärkt also den ganzen Trupp.
+- **Auflösung:** Beide Seiten würfeln ihre Kraft × (0,85…1,15), per
+  Seed deterministisch. Vor dem Start zeigt die UI eine ehrliche
+  Einschätzung (gute Chancen / ausgeglichen / riskant).
+- **Sieg:** volle Beute + Aether, geringe Verluste (je klarer der Sieg,
+  desto weniger). **Niederlage:** halber Trupp verloren, nur ein
+  Trostpreis. Es läuft höchstens eine Jagd gleichzeitig.
+
 ## 📜 Aufgaben (Quests)
 
-Eine geführte Kette von 13 Aufgaben führt durch alle Systeme (Dock-Ausbau
+Eine geführte Kette von 17 Aufgaben führt durch alle Systeme (Dock-Ausbau
 → erste Ausbauten → Wachtturm → erste Expedition → Kollektor → erster
 Segen). Die erste Aufgabe ist bewusst das Himmelsdock: Sie lehrt die
 zentrale Regel, dass kein Gebäude höher sein kann als das Dock.

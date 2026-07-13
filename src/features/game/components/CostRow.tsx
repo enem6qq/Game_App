@@ -2,11 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/ui';
-import {
-  RESOURCE_IDS,
-  formatAmount,
-  type Resources,
-} from '@/features/game/engine';
+import { RESOURCE_IDS, formatAmount, type Resources } from '@/features/game/engine';
 import { ResourceIcon } from '@/features/game/graphics/icons';
 import { useTheme } from '@/theme/ThemeProvider';
 

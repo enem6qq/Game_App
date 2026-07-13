@@ -3,8 +3,10 @@
  * Aufgaben, Segen und Offline-Fortschritt.
  */
 import {
+  BEASTS,
   BLESSING_BUILD_TIME_FACTOR,
   EXPEDITION_TIERS,
+  GAME_STATE_VERSION,
   GLEITER_COST,
   OFFLINE_CAP_MS,
   QUESTS,
@@ -21,14 +23,19 @@ import {
   formatDuration,
   getEvent,
   gleiterCap,
+  gleiterPowerPerUnit,
+  migrateGameState,
   productionBetween,
   queueSlots,
   questClaimable,
   renameIsland,
   resolveExpedition,
+  resolveHunt,
   startExpedition,
+  startHunt,
   startUpgrade,
   storageCap,
+  totalGleiter,
   trainGleiter,
   upgradeCost,
   type GameState,
@@ -487,6 +494,126 @@ describe('Segen', () => {
 // ---------------------------------------------------------------------------
 // Verschiedenes
 // ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
+// Bestienjagd
+// ---------------------------------------------------------------------------
+
+describe('Bestienjagd', () => {
+  function hunterState(): GameState {
+    return makeState({
+      buildings: { himmelsdock: 3, wachtturm: 2, werft: 2 },
+      gleiter: 8,
+    });
+  }
+
+  it('Kampfkraft je Gleiter steigt mit der Werft', () => {
+    expect(gleiterPowerPerUnit(makeState({ buildings: { werft: 1 } }))).toBe(10);
+    expect(gleiterPowerPerUnit(makeState({ buildings: { werft: 3 } }))).toBe(14);
+  });
+
+  it('verlangt den passenden Wachtturm und genug Gleiter', () => {
+    expect(startHunt(makeState(), 'nebelschlange', T0)).toEqual({
+      ok: false,
+      error: 'towerTooLow',
+    });
+    const weak = { ...hunterState(), gleiter: 2 };
+    expect(startHunt(weak, 'nebelschlange', T0)).toEqual({
+      ok: false,
+      error: 'notEnoughGleiter',
+    });
+  });
+
+  it('erlaubt nur eine Jagd gleichzeitig und bindet die Gleiter', () => {
+    const started = startHunt(hunterState(), 'nebelschlange', T0);
+    expect(started.ok).toBe(true);
+    if (!started.ok) return;
+
+    expect(started.state.gleiter).toBe(8 - BEASTS.nebelschlange.gleiter);
+    expect(totalGleiter(started.state)).toBe(8);
+    expect(started.state.hunts[0]?.power).toBe(
+      BEASTS.nebelschlange.gleiter * gleiterPowerPerUnit(hunterState()),
+    );
+    expect(startHunt(started.state, 'nebelschlange', T0)).toEqual({
+      ok: false,
+      error: 'huntActive',
+    });
+  });
+
+  it('lässt sich erst nach dem Kampf auflösen und ist deterministisch', () => {
+    const started = startHunt(hunterState(), 'nebelschlange', T0);
+    expect(started.ok).toBe(true);
+    if (!started.ok) return;
+    const hunt = started.state.hunts[0]!;
+
+    expect(resolveHunt(started.state, hunt.id, T0)).toEqual({
+      ok: false,
+      error: 'huntNotReady',
+    });
+
+    const later = hunt.finishesAt + 1;
+    const a = resolveHunt(started.state, hunt.id, later);
+    const b = resolveHunt(started.state, hunt.id, later);
+    expect(a.ok && b.ok).toBe(true);
+    if (!a.ok || !b.ok) return;
+
+    expect(a.result).toEqual(b.result);
+    expect(a.result.gleiterVerloren + a.result.gleiterZurueck).toBe(
+      BEASTS.nebelschlange.gleiter,
+    );
+    expect(a.state.hunts).toHaveLength(0);
+    expect(a.state.huntsResolved).toBe(1);
+    expect(a.state.huntsWon).toBe(a.result.sieg ? 1 : 0);
+    if (a.result.sieg) {
+      expect(a.result.loot.aether).toBeGreaterThan(0);
+    } else {
+      expect(a.result.loot.aether).toBe(0);
+    }
+  });
+
+  it('ein übermächtiger Trupp gewinnt garantiert (Würfelspanne reicht nicht)', () => {
+    // Kraft weit über Bestie × 1,15/0,85 – Sieg unabhängig vom Seed.
+    const started = startHunt(
+      makeState({
+        buildings: { himmelsdock: 10, wachtturm: 6, werft: 10 },
+        gleiter: 30,
+      }),
+      'nebelschlange',
+      T0,
+    );
+    expect(started.ok).toBe(true);
+    if (!started.ok) return;
+    const hunt = started.state.hunts[0]!;
+    const result = resolveHunt(started.state, hunt.id, hunt.finishesAt + 1);
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.result.sieg).toBe(true);
+  });
+});
+
+describe('Spielstand-Migration', () => {
+  it('füllt fehlende Felder älterer Spielstände auf', () => {
+    const old = makeState() as Partial<GameState> & Record<string, unknown>;
+    delete old.hunts;
+    delete old.huntsStarted;
+    delete old.huntsResolved;
+    delete old.huntsWon;
+
+    const migrated = migrateGameState(old, T0 + 1000);
+    expect(migrated.version).toBe(GAME_STATE_VERSION);
+    expect(migrated.hunts).toEqual([]);
+    expect(migrated.huntsResolved).toBe(0);
+    // Bestehende Daten bleiben erhalten:
+    expect(migrated.resources.korn).toBe(150);
+    expect(migrated.buildings.himmelsdock).toBe(1);
+  });
+
+  it('erzeugt aus nichts einen frischen Spielstand', () => {
+    const migrated = migrateGameState(undefined, T0);
+    expect(migrated.buildings.windmuehle).toBe(1);
+    expect(migrated.hunts).toEqual([]);
+  });
+});
 
 describe('Insel umbenennen', () => {
   it('akzeptiert normale Namen und trimmt sie', () => {

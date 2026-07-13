@@ -3,11 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Modal, StyleSheet, View } from 'react-native';
 
 import { Button, Card, Text } from '@/components/ui';
-import {
-  RESOURCE_IDS,
-  formatAmount,
-  formatDuration,
-} from '@/features/game/engine';
+import { RESOURCE_IDS, formatAmount, formatDuration } from '@/features/game/engine';
 import { ResourceIcon } from '@/features/game/graphics/icons';
 import { useGameStore } from '@/features/game/store';
 

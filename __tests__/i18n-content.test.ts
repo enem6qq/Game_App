@@ -5,6 +5,7 @@
  * erst beim Spielen.
  */
 import {
+  BEAST_IDS,
   BLESSING_IDS,
   BUILDING_IDS,
   EVENTS,
@@ -64,6 +65,15 @@ describe('i18n-Vollständigkeit der Spielinhalte', () => {
     }
   });
 
+  it('alle Bestien haben Name, Beschreibung und beide Kampfausgänge', () => {
+    for (const id of BEAST_IDS) {
+      expectKey(`game.hunts.beasts.${id}.name`);
+      expectKey(`game.hunts.beasts.${id}.desc`);
+      expectKey(`game.hunts.beasts.${id}.won`);
+      expectKey(`game.hunts.beasts.${id}.lost`);
+    }
+  });
+
   it('alle Aufgaben haben einen Text', () => {
     for (const quest of QUESTS) {
       expectKey(`game.quests.${quest.id}`);
@@ -96,6 +106,8 @@ describe('i18n-Vollständigkeit der Spielinhalte', () => {
       'towerTooLow',
       'expeditionSlotsFull',
       'expeditionNotReady',
+      'huntActive',
+      'huntNotReady',
       'invalidChoice',
       'questNotReady',
       'blessingMax',

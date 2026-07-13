@@ -158,6 +158,42 @@
         }
       }
     },
+    "hunts": {
+      "title": "Beast Hunts",
+      "subtitle": "Each glider fights with ⚔️ {{power}} combat power – upgrade the Glider Yard to strengthen them.",
+      "locked": "Upgrade the Watchtower to level 2 to track sky beasts.",
+      "vs": "vs",
+      "chance": {
+        "good": "good odds",
+        "even": "an even match",
+        "bad": "risky!"
+      },
+      "send": "Sound the hunt",
+      "underway": "{{count}} gliders are cornering the beast …",
+      "arrived": "The battle is over – what happened?",
+      "openReport": "View battle report",
+      "reportTitle": "Battle report",
+      "beasts": {
+        "nebelschlange": {
+          "name": "Mist Serpent",
+          "desc": "A pale serpent that ambushes supply convoys from inside the fog banks.",
+          "won": "After a wild chase through the veils, the Mist Serpent plunges hissing into the cloud sea – its hoard is yours.",
+          "lost": "The serpent strikes out of nowhere and shatters the formation. The survivors barely escape."
+        },
+        "sturmrok": {
+          "name": "Storm Roc",
+          "desc": "A bird of prey the size of a sailing ship. Its nest overflows with stolen treasure.",
+          "won": "In the eye of the storm the decisive strike lands – the roc flees screeching, its nest lies open.",
+          "lost": "A single wingbeat scatters your gliders. Retreat – this time it was stronger."
+        },
+        "wolkenleviathan": {
+          "name": "Cloud Leviathan",
+          "desc": "Ancient, colossal, furious. A century of aether glitters in the furrows of its shell.",
+          "won": "For hours you dance around the colossus, then it sinks roaring into the deep – its shell yields its treasures.",
+          "lost": "One sweep of its tail fin – and half the crew is history. This giant demands more strength."
+        }
+      }
+    },
     "events": {
       "treibgutFeld": {
         "title": "The Debris Field",
@@ -315,7 +351,11 @@
       "kollektor1": "Build the Aether Collector.",
       "korn2000": "Collect 2,000 skygrain in total.",
       "segen1": "Grant your first blessing.",
-      "dock4": "Upgrade the Sky Dock to level 4."
+      "dock4": "Upgrade the Sky Dock to level 4.",
+      "jagd1": "Face your first sky beast.",
+      "gleiter10": "Own 10 gliders.",
+      "jagdsiege3": "Defeat 3 sky beasts.",
+      "dock5": "Upgrade the Sky Dock to level 5."
     },
     "blessings": {
       "title": "Blessings",
@@ -343,6 +383,7 @@
       "dock": "Dock level {{level}}",
       "quests": "Quests {{done}}/{{total}}",
       "expeditions": "{{count}} expeditions",
+      "hunts": "Hunts {{won}}/{{total}}",
       "lifetime": "{{amount}} total"
     },
     "chronicle": {
@@ -353,7 +394,9 @@
       "expeditionResolved": "Expedition to {{tier}} completed.",
       "gleiterTrained": "{{count}} gliders trained.",
       "questDone": "Quest completed: {{quest}}",
-      "blessing": "Blessing granted: {{blessing}} (level {{level}})"
+      "blessing": "Blessing granted: {{blessing}} (level {{level}})",
+      "huntWon": "Beast defeated: {{beast}}!",
+      "huntLost": "Hunt for {{beast}} failed."
     },
     "offline": {
       "title": "Welcome back!",
@@ -388,6 +431,8 @@
       "towerTooLow": "The Watchtower is too low for that.",
       "expeditionSlotsFull": "All expedition slots are in use.",
       "expeditionNotReady": "This expedition is not ready yet.",
+      "huntActive": "Your gliders are already hunting a beast.",
+      "huntNotReady": "The battle is not over yet.",
       "invalidChoice": "Invalid choice.",
       "questNotReady": "The quest is not fulfilled yet.",
       "blessingMax": "This blessing is already at maximum.",

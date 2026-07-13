@@ -6,20 +6,28 @@
  * Fehlercode) zurück – kein verstecktes Verhalten, alles testbar.
  */
 import {
+  BEASTS,
   BLESSINGS,
   BLESSING_LOOT_BONUS,
   BUILDINGS,
   CHRONICLE_MAX_ENTRIES,
+  COMBAT_VARIANCE,
   EXPEDITION_TIERS,
   EXPEDITION_TIER_IDS,
+  GLEITER_BASE_POWER,
   GLEITER_COST,
   GLEITER_PER_WERFT_LEVEL,
+  GLEITER_POWER_PER_WERFT_LEVEL,
+  HUNT_CONSOLATION_LOOT,
+  HUNT_LOSS_PCT,
+  HUNT_WIN_MAX_LOSS,
   MAX_BUILDING_LEVEL,
   MAX_ISLAND_NAME_LENGTH,
   OFFLINE_CAP_MS,
   QUESTS,
   SECOND_EXPEDITION_TOWER_LEVEL,
   TOWER_LOOT_BONUS_PER_LEVEL,
+  type BeastId,
 } from './content';
 import { EVENTS, getEvent } from './events';
 import {
@@ -43,11 +51,12 @@ import type {
   ExpeditionResult,
   ExpeditionTierId,
   GameState,
+  HuntResult,
   OfflineSummary,
   Resources,
 } from './types';
 
-export const GAME_STATE_VERSION = 1;
+export const GAME_STATE_VERSION = 2;
 
 // ---------------------------------------------------------------------------
 // Startzustand
@@ -77,6 +86,10 @@ export function createInitialState(now: number): GameState {
     expeditionsStarted: 0,
     expeditionsResolved: 0,
     expeditions: [],
+    hunts: [],
+    huntsStarted: 0,
+    huntsResolved: 0,
+    huntsWon: 0,
     questIndex: 0,
     blessings: {
       rueckenwind: 0,
@@ -100,8 +113,35 @@ function cloneState(state: GameState): GameState {
     buildings: { ...state.buildings },
     queue: state.queue.map((t) => ({ ...t })),
     expeditions: state.expeditions.map((e) => ({ ...e })),
+    hunts: state.hunts.map((h) => ({ ...h })),
     blessings: { ...state.blessings },
     chronicle: [...state.chronicle],
+  };
+}
+
+/**
+ * Bringt einen gespeicherten (evtl. älteren) Spielstand auf die aktuelle
+ * Struktur: fehlende Felder bekommen Startwerte, vorhandene bleiben.
+ * Wird beim Laden aus dem Gerätespeicher aufgerufen.
+ */
+export function migrateGameState(old: unknown, now: number): GameState {
+  const base = createInitialState(now);
+  const o = (old ?? {}) as Partial<GameState>;
+  return {
+    ...base,
+    ...o,
+    version: GAME_STATE_VERSION,
+    resources: { ...base.resources, ...o.resources },
+    lifetime: { ...base.lifetime, ...o.lifetime },
+    buildings: { ...base.buildings, ...o.buildings },
+    blessings: { ...base.blessings, ...o.blessings },
+    queue: o.queue ?? [],
+    expeditions: o.expeditions ?? [],
+    hunts: o.hunts ?? [],
+    huntsStarted: o.huntsStarted ?? 0,
+    huntsResolved: o.huntsResolved ?? 0,
+    huntsWon: o.huntsWon ?? 0,
+    chronicle: o.chronicle ?? base.chronicle,
   };
 }
 
@@ -131,6 +171,14 @@ export function expeditionSlots(state: GameState): number {
 /** Maximale Gleiterzahl (Werft-Stufe). */
 export function gleiterCap(state: GameState): number {
   return state.buildings.werft * GLEITER_PER_WERFT_LEVEL;
+}
+
+/** Kampfkraft je Gleiter (steigt mit dem Ausbau der Werft). */
+export function gleiterPowerPerUnit(state: GameState): number {
+  return (
+    GLEITER_BASE_POWER +
+    GLEITER_POWER_PER_WERFT_LEVEL * Math.max(0, state.buildings.werft - 1)
+  );
 }
 
 /** Gebäudestufe inklusive bereits beauftragter Ausbauten. */
@@ -393,6 +441,91 @@ export function resolveExpedition(
       gleiterVerloren,
       gleiterZurueck,
     },
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Bestienjagd
+// ---------------------------------------------------------------------------
+
+export function startHunt(state: GameState, beastId: BeastId, now: number): ActionResult {
+  const beast = BEASTS[beastId];
+  if (state.buildings.wachtturm < beast.minTower) {
+    return { ok: false, error: 'towerTooLow' };
+  }
+  // Eine Jagd gleichzeitig – Bestien sind kein Fließband.
+  if (state.hunts.length >= 1) return { ok: false, error: 'huntActive' };
+  if (state.gleiter < beast.gleiter) return { ok: false, error: 'notEnoughGleiter' };
+
+  const s = cloneState(state);
+  s.gleiter -= beast.gleiter;
+  s.huntsStarted += 1;
+  s.hunts.push({
+    id: `jagd-${s.huntsStarted}`,
+    beast: beastId,
+    gleiter: beast.gleiter,
+    power: beast.gleiter * gleiterPowerPerUnit(state),
+    startedAt: now,
+    finishesAt: now + beast.durationMs,
+    seed: combineSeed(state.createdAt, s.huntsStarted, now, beast.power),
+  });
+  return { ok: true, state: s };
+}
+
+/**
+ * Kampf auflösen: Beide Seiten würfeln ihre Kampfkraft × (0,85…1,15).
+ * Sieg bringt volle Beute (inkl. Weitblick-/Wachtturm-Bonus) und wenige
+ * Verluste; eine Niederlage kostet den halben Trupp und bringt nur einen
+ * Trostpreis. Gleicher Seed ⇒ gleiches Ergebnis, exakt testbar.
+ */
+export function resolveHunt(
+  state: GameState,
+  huntId: string,
+  now: number,
+): ActionResult<HuntResult> {
+  const hunt = state.hunts.find((h) => h.id === huntId);
+  if (!hunt || hunt.finishesAt > now) return { ok: false, error: 'huntNotReady' };
+  const beast = BEASTS[hunt.beast as BeastId];
+  if (!beast) return { ok: false, error: 'invalidChoice' };
+
+  const rand = mulberry32(hunt.seed);
+  const roll = () => 1 - COMBAT_VARIANCE + rand() * 2 * COMBAT_VARIANCE;
+  const playerRoll = hunt.power * roll();
+  const beastRoll = beast.power * roll();
+  const sieg = playerRoll >= beastRoll;
+
+  const lossPct = sieg
+    ? Math.min(HUNT_WIN_MAX_LOSS, Math.max(0, 0.25 / (playerRoll / beastRoll) - 0.05))
+    : HUNT_LOSS_PCT;
+  const gleiterVerloren = Math.min(hunt.gleiter, Math.floor(hunt.gleiter * lossPct));
+  const gleiterZurueck = hunt.gleiter - gleiterVerloren;
+
+  const bonus =
+    (1 + BLESSING_LOOT_BONUS * state.blessings.weitblick) *
+    (1 + TOWER_LOOT_BONUS_PER_LEVEL * Math.max(0, state.buildings.wachtturm - 1));
+  const lootFactor = (sieg ? 1 : HUNT_CONSOLATION_LOOT) * bonus;
+
+  const loot = cloneResources(ZERO_RESOURCES);
+  for (const [resource, base] of Object.entries(beast.loot)) {
+    loot[resource as keyof Resources] = Math.floor(base * lootFactor);
+  }
+  loot.aether = sieg ? Math.round(beast.aether * bonus) : 0;
+
+  const s = cloneState(state);
+  credit(s, loot);
+  s.gleiter += gleiterZurueck;
+  s.hunts = s.hunts.filter((h) => h.id !== huntId);
+  s.huntsResolved += 1;
+  if (sieg) s.huntsWon += 1;
+  addChronicle(s, now, sieg ? 'huntWon' : 'huntLost', {
+    beast: hunt.beast,
+    verloren: gleiterVerloren,
+  });
+
+  return {
+    ok: true,
+    state: s,
+    result: { beast: hunt.beast, sieg, loot, gleiterVerloren, gleiterZurueck },
   };
 }
 

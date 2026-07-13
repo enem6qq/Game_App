@@ -14,17 +14,22 @@ import {
   buyBlessing,
   claimQuest,
   createInitialState,
+  migrateGameState,
   renameIsland,
   resolveExpedition,
+  resolveHunt,
   startExpedition,
+  startHunt,
   startUpgrade,
   trainGleiter,
   type ActionError,
+  type BeastId,
   type BlessingId,
   type BuildingId,
   type ExpeditionResult,
   type ExpeditionTierId,
   type GameState,
+  type HuntResult,
   type OfflineSummary,
 } from './engine';
 
@@ -37,6 +42,8 @@ type GameStore = {
   lastError: ActionError | null;
   /** Ergebnis der zuletzt aufgelösten Expedition (für die Ergebnis-Karte). */
   lastExpeditionResult: ExpeditionResult | null;
+  /** Bericht der zuletzt aufgelösten Bestienjagd. */
+  lastHuntResult: HuntResult | null;
   /** Zusammenfassung nach längerer Abwesenheit (für das Willkommen-Modal). */
   offlineSummary: OfflineSummary | null;
 
@@ -47,12 +54,15 @@ type GameStore = {
   train: (count: number) => void;
   sendExpedition: (tier: ExpeditionTierId) => void;
   chooseExpeditionOption: (expeditionId: string, choiceId: string) => void;
+  sendHunt: (beast: BeastId) => void;
+  openHuntReport: (huntId: string) => void;
   claimQuestReward: () => void;
   purchaseBlessing: (blessing: BlessingId) => void;
   setIslandName: (name: string) => void;
 
   dismissError: () => void;
   dismissExpeditionResult: () => void;
+  dismissHuntResult: () => void;
   dismissOfflineSummary: () => void;
   /** Kompletter Neustart (Einstellungen → Spielstand löschen). */
   resetGame: () => void;
@@ -73,6 +83,7 @@ export const useGameStore = create<GameStore>()(
         state: createInitialState(Date.now()),
         lastError: null,
         lastExpeditionResult: null,
+        lastHuntResult: null,
         offlineSummary: null,
 
         tick: (nowMs = Date.now()) => {
@@ -110,6 +121,17 @@ export const useGameStore = create<GameStore>()(
           }
         },
 
+        sendHunt: (beast) => apply(startHunt(get().state, beast, Date.now())),
+
+        openHuntReport: (huntId) => {
+          const result = resolveHunt(get().state, huntId, Date.now());
+          if (result.ok) {
+            set({ state: result.state, lastHuntResult: result.result, lastError: null });
+          } else {
+            set({ lastError: result.error });
+          }
+        },
+
         claimQuestReward: () => apply(claimQuest(get().state, Date.now())),
 
         purchaseBlessing: (blessing) =>
@@ -119,6 +141,7 @@ export const useGameStore = create<GameStore>()(
 
         dismissError: () => set({ lastError: null }),
         dismissExpeditionResult: () => set({ lastExpeditionResult: null }),
+        dismissHuntResult: () => set({ lastHuntResult: null }),
         dismissOfflineSummary: () => set({ offlineSummary: null }),
 
         resetGame: () =>
@@ -126,6 +149,7 @@ export const useGameStore = create<GameStore>()(
             state: createInitialState(Date.now()),
             lastError: null,
             lastExpeditionResult: null,
+            lastHuntResult: null,
             offlineSummary: null,
           }),
       };
@@ -136,6 +160,11 @@ export const useGameStore = create<GameStore>()(
       storage: createJSONStorage(() => AsyncStorage),
       // Nur der Spielstand wird gespeichert – UI-Zustände nicht.
       partialize: (store) => ({ state: store.state }),
+      // Ältere Speicherstände auf die aktuelle Struktur heben.
+      migrate: (persisted) => {
+        const p = persisted as { state?: unknown } | undefined;
+        return { state: migrateGameState(p?.state, Date.now()) };
+      },
       // Nach dem Laden sofort die Offline-Zeit anrechnen.
       onRehydrateStorage: () => (store) => {
         if (store) store.tick(Date.now());

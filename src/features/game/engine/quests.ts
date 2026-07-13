@@ -4,9 +4,13 @@
 import { QUESTS, type QuestCondition, type QuestDef } from './content';
 import type { GameState } from './types';
 
-/** Gleiter insgesamt (auf der Insel + unterwegs). */
+/** Gleiter insgesamt (auf der Insel + auf Expedition + auf Jagd). */
 export function totalGleiter(state: GameState): number {
-  return state.gleiter + state.expeditions.reduce((sum, e) => sum + e.gleiter, 0);
+  return (
+    state.gleiter +
+    state.expeditions.reduce((sum, e) => sum + e.gleiter, 0) +
+    state.hunts.reduce((sum, h) => sum + h.gleiter, 0)
+  );
 }
 
 export function conditionMet(state: GameState, condition: QuestCondition): boolean {
@@ -23,6 +27,10 @@ export function conditionMet(state: GameState, condition: QuestCondition): boole
       const total = Object.values(state.blessings).reduce((a, b) => a + b, 0);
       return total >= condition.count;
     }
+    case 'hunts':
+      return state.huntsResolved >= condition.count;
+    case 'huntsWon':
+      return state.huntsWon >= condition.count;
   }
 }
 

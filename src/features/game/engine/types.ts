@@ -62,6 +62,30 @@ export type ExpeditionResult = {
   gleiterZurueck: number;
 };
 
+/**
+ * Eine laufende Bestienjagd. Nach Ablauf wird sie vom Spieler
+ * aufgelöst („Bericht ansehen") – der Ausgang steckt im Seed.
+ */
+export type Hunt = {
+  id: string;
+  beast: string;
+  gleiter: number;
+  /** Kampfkraft des Trupps beim Aufbruch (Werft-Stufe eingefroren). */
+  power: number;
+  startedAt: number;
+  finishesAt: number;
+  seed: number;
+};
+
+/** Ergebnis einer aufgelösten Jagd (für die Bericht-Anzeige). */
+export type HuntResult = {
+  beast: string;
+  sieg: boolean;
+  loot: Resources;
+  gleiterVerloren: number;
+  gleiterZurueck: number;
+};
+
 /** Eintrag in der Inselchronik (Texte via i18n-Schlüssel). */
 export type ChronicleEntry = {
   at: number;
@@ -93,6 +117,11 @@ export type GameState = {
   expeditionsStarted: number;
   expeditionsResolved: number;
   expeditions: Expedition[];
+  /** Laufende und gestartete Bestienjagden. */
+  hunts: Hunt[];
+  huntsStarted: number;
+  huntsResolved: number;
+  huntsWon: number;
   /** Index der aktuell aktiven Aufgabe in der Quest-Kette. */
   questIndex: number;
   blessings: Record<BlessingId, number>;
@@ -112,6 +141,8 @@ export type ActionError =
   | 'towerTooLow'
   | 'expeditionSlotsFull'
   | 'expeditionNotReady'
+  | 'huntActive'
+  | 'huntNotReady'
   | 'invalidChoice'
   | 'questNotReady'
   | 'blessingMax'

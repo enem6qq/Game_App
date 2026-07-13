@@ -114,7 +114,8 @@ function StatsCard() {
           done: progress.done,
           total: progress.total,
         })}{' '}
-        · {t('game.stats.expeditions', { count: state.expeditionsResolved })}
+        · {t('game.stats.expeditions', { count: state.expeditionsResolved })} ·{' '}
+        {t('game.stats.hunts', { won: state.huntsWon, total: state.huntsResolved })}
       </Text>
       <View style={styles.rowWrap}>
         {RESOURCE_IDS.map((resource) => (
@@ -157,6 +158,14 @@ function ChronicleCard() {
         });
       case 'gleiterTrained':
         return t('game.chronicle.gleiterTrained', { count: Number(p.count ?? 0) });
+      case 'huntWon':
+        return t('game.chronicle.huntWon', {
+          beast: t(`game.hunts.beasts.${p.beast}.name`),
+        });
+      case 'huntLost':
+        return t('game.chronicle.huntLost', {
+          beast: t(`game.hunts.beasts.${p.beast}.name`),
+        });
       case 'questDone':
         return t('game.chronicle.questDone', {
           quest: t(`game.quests.${p.quest}`),

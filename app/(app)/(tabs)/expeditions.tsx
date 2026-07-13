@@ -8,6 +8,8 @@ import { CountdownBar } from '@/features/game/components/CountdownBar';
 import { ErrorNotice } from '@/features/game/components/ErrorNotice';
 import { ResourceBar } from '@/features/game/components/ResourceBar';
 import {
+  BEASTS,
+  BEAST_IDS,
   EXPEDITION_TIERS,
   EXPEDITION_TIER_IDS,
   GLEITER_COST,
@@ -19,8 +21,10 @@ import {
   formatDuration,
   getEvent,
   gleiterCap,
+  gleiterPowerPerUnit,
   totalGleiter,
   type Expedition,
+  type Hunt,
 } from '@/features/game/engine';
 import { ResourceIcon } from '@/features/game/graphics/icons';
 import { useGameStore } from '@/features/game/store';
@@ -47,6 +51,7 @@ export default function ExpeditionsScreen() {
       <View style={styles.stack}>
         <ResourceBar />
         <ExpeditionResultCard />
+        <HuntReportCard />
 
         {!hasTower ? (
           <Card style={styles.card}>
@@ -60,6 +65,7 @@ export default function ExpeditionsScreen() {
               <ActiveExpeditionCard key={expedition.id} expedition={expedition} />
             ))}
             <DestinationList />
+            <HuntSection />
           </>
         )}
       </View>
@@ -184,6 +190,167 @@ function ExpeditionResultCard() {
     <Card style={styles.eventCard}>
       <Text variant="h3">📯 {t('game.expeditions.resultTitle')}</Text>
       <Text>{t(`game.events.${result.eventId}.results.${result.outcomeId}`)}</Text>
+      <View style={styles.rowWrap}>
+        {RESOURCE_IDS.filter((r) => result.loot[r] > 0).map((resource) => (
+          <View key={resource} style={styles.lootItem}>
+            <ResourceIcon id={resource} size={16} />
+            <Text>+{formatAmount(result.loot[resource])}</Text>
+          </View>
+        ))}
+      </View>
+      {result.gleiterVerloren > 0 ? (
+        <Text variant="caption" muted>
+          💔 {t('game.expeditions.lost', { count: result.gleiterVerloren })}
+        </Text>
+      ) : null}
+      <Text variant="caption" muted>
+        🪂 {t('game.expeditions.returned', { count: result.gleiterZurueck })}
+      </Text>
+      <Button title={t('game.expeditions.resultOk')} onPress={dismiss} />
+    </Card>
+  );
+}
+
+/**
+ * Bestienjagd: Himmelsbestien fordern den Trupp zum Kampf.
+ * Kampfkraft (Gleiter × Werft-Bonus) gegen die Kraft der Bestie.
+ */
+function HuntSection() {
+  const { t } = useTranslation();
+  const state = useGameStore((s) => s.state);
+  const sendHunt = useGameStore((s) => s.sendHunt);
+
+  const unlocked = BEAST_IDS.some(
+    (id) => state.buildings.wachtturm >= BEASTS[id].minTower,
+  );
+  const powerPerUnit = gleiterPowerPerUnit(state);
+
+  return (
+    <>
+      <Text variant="h2" style={styles.sectionTitle}>
+        {t('game.hunts.title')}
+      </Text>
+      <Text variant="caption" muted>
+        {t('game.hunts.subtitle', { power: powerPerUnit })}
+      </Text>
+
+      {!unlocked ? (
+        <Card style={styles.card}>
+          <Text muted>{t('game.hunts.locked')}</Text>
+        </Card>
+      ) : (
+        <>
+          {state.hunts.map((hunt) => (
+            <ActiveHuntCard key={hunt.id} hunt={hunt} />
+          ))}
+          {BEAST_IDS.map((beastId) => {
+            const beast = BEASTS[beastId];
+            const towerOk = state.buildings.wachtturm >= beast.minTower;
+            const gleiterOk = state.gleiter >= beast.gleiter;
+            const free = state.hunts.length === 0;
+            const myPower = beast.gleiter * powerPerUnit;
+            const chance =
+              myPower >= beast.power * 1.15
+                ? 'good'
+                : myPower >= beast.power * 0.9
+                  ? 'even'
+                  : 'bad';
+
+            return (
+              <Card key={beastId} style={[styles.card, !towerOk && styles.locked]}>
+                <View style={styles.rowBetween}>
+                  <Text variant="h3">
+                    {beast.emoji} {t(`game.hunts.beasts.${beastId}.name`)}
+                  </Text>
+                  <Text variant="caption" muted>
+                    ⏱️ {formatDuration(beast.durationMs)}
+                  </Text>
+                </View>
+                <Text variant="caption" muted>
+                  {t(`game.hunts.beasts.${beastId}.desc`)}
+                </Text>
+                <Text variant="caption" muted>
+                  🪂 ×{beast.gleiter} · ⚔️ {myPower} {t('game.hunts.vs')} 💢 {beast.power}{' '}
+                  · {t(`game.hunts.chance.${chance}`)}
+                  {!towerOk
+                    ? ` · ${t('game.expeditions.needsTower', { level: beast.minTower })}`
+                    : ''}
+                </Text>
+                {towerOk ? (
+                  <Button
+                    title={t('game.hunts.send')}
+                    variant={gleiterOk && free ? 'primary' : 'secondary'}
+                    disabled={!gleiterOk || !free}
+                    onPress={() => sendHunt(beastId)}
+                  />
+                ) : null}
+              </Card>
+            );
+          })}
+        </>
+      )}
+    </>
+  );
+}
+
+/** Eine laufende Jagd: Countdown, danach Bericht abholen. */
+function ActiveHuntCard({ hunt }: { hunt: Hunt }) {
+  const { t } = useTranslation();
+  const now = useGameStore((s) => s.state.lastTick);
+  const openReport = useGameStore((s) => s.openHuntReport);
+
+  const beast = BEASTS[hunt.beast as keyof typeof BEASTS];
+  const done = hunt.finishesAt <= now;
+
+  return (
+    <Card style={styles.eventCard}>
+      <Text variant="h3">
+        {beast?.emoji} {t(`game.hunts.beasts.${hunt.beast}.name`)}
+      </Text>
+      {done ? (
+        <>
+          <Text muted>{t('game.hunts.arrived')}</Text>
+          <Button
+            title={t('game.hunts.openReport')}
+            onPress={() => openReport(hunt.id)}
+          />
+        </>
+      ) : (
+        <>
+          <Text variant="caption" muted>
+            {t('game.hunts.underway', { count: hunt.gleiter })}
+          </Text>
+          <CountdownBar
+            startedAt={hunt.startedAt}
+            finishesAt={hunt.finishesAt}
+            now={now}
+          />
+        </>
+      )}
+    </Card>
+  );
+}
+
+/** Der Kampfbericht der letzten Jagd. */
+function HuntReportCard() {
+  const { t } = useTranslation();
+  const result = useGameStore((s) => s.lastHuntResult);
+  const dismiss = useGameStore((s) => s.dismissHuntResult);
+
+  if (!result) return null;
+
+  return (
+    <Card style={styles.eventCard}>
+      <Text variant="h3">
+        {result.sieg ? '🏆' : '💥'} {t('game.hunts.reportTitle')}
+      </Text>
+      <Text>
+        {t(
+          result.sieg
+            ? `game.hunts.beasts.${result.beast}.won`
+            : `game.hunts.beasts.${result.beast}.lost`,
+        )}
+      </Text>
       <View style={styles.rowWrap}>
         {RESOURCE_IDS.filter((r) => result.loot[r] > 0).map((resource) => (
           <View key={resource} style={styles.lootItem}>

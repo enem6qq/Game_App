@@ -158,6 +158,42 @@
         }
       }
     },
+    "hunts": {
+      "title": "Bestienjagd",
+      "subtitle": "Jeder Gleiter kämpft mit ⚔️ {{power}} Kampfkraft – baue die Gleiterwerft aus, um sie zu stärken.",
+      "locked": "Baue den Wachtturm auf Stufe 2 aus, um Himmelsbestien aufzuspüren.",
+      "vs": "gegen",
+      "chance": {
+        "good": "gute Chancen",
+        "even": "ausgeglichen",
+        "bad": "riskant!"
+      },
+      "send": "Zur Jagd blasen",
+      "underway": "{{count}} Gleiter stellen die Bestie …",
+      "arrived": "Der Kampf ist geschlagen – was ist passiert?",
+      "openReport": "Kampfbericht ansehen",
+      "reportTitle": "Kampfbericht",
+      "beasts": {
+        "nebelschlange": {
+          "name": "Nebelschlange",
+          "desc": "Ein bleiches Schlangenwesen, das Vorratskonvois aus der Nebelbank heraus überfällt.",
+          "won": "Nach wilder Verfolgung durch die Schwaden stürzt die Nebelschlange zischend ins Wolkenmeer – ihr Hort gehört euch.",
+          "lost": "Die Schlange schießt aus dem Nichts hervor und zerschlägt die Formation. Die Überlebenden retten sich mit knapper Not."
+        },
+        "sturmrok": {
+          "name": "Sturmrok",
+          "desc": "Ein Raubvogel groß wie ein Segelschiff. Sein Nest quillt über vor gestohlenen Schätzen.",
+          "won": "Im Auge des Sturms gelingt der entscheidende Stoß – der Rok flieht kreischend, sein Nest liegt offen.",
+          "lost": "Ein einziger Flügelschlag wirft eure Gleiter auseinander. Rückzug – diesmal war er stärker."
+        },
+        "wolkenleviathan": {
+          "name": "Wolkenleviathan",
+          "desc": "Uralt, riesig, zornig. In den Furchen seines Panzers glitzert der Aether eines Jahrhunderts.",
+          "won": "Stundenlang dauert der Tanz um den Koloss, dann sinkt er brüllend in die Tiefe – sein Panzer gibt seine Schätze frei.",
+          "lost": "Ein Schlag seiner Schwanzflosse – und der halbe Trupp ist Geschichte. Gegen diesen Giganten braucht es mehr Kraft."
+        }
+      }
+    },
     "events": {
       "treibgutFeld": {
         "title": "Das Treibgutfeld",
@@ -315,7 +351,11 @@
       "kollektor1": "Errichte den Aetherkollektor.",
       "korn2000": "Sammle insgesamt 2.000 Luftkorn.",
       "segen1": "Wirke deinen ersten Segen.",
-      "dock4": "Baue das Himmelsdock auf Stufe 4 aus."
+      "dock4": "Baue das Himmelsdock auf Stufe 4 aus.",
+      "jagd1": "Stelle dich deiner ersten Himmelsbestie.",
+      "gleiter10": "Besitze 10 Gleiter.",
+      "jagdsiege3": "Besiege 3 Himmelsbestien.",
+      "dock5": "Baue das Himmelsdock auf Stufe 5 aus."
     },
     "blessings": {
       "title": "Segen",
@@ -343,6 +383,7 @@
       "dock": "Dock Stufe {{level}}",
       "quests": "Aufgaben {{done}}/{{total}}",
       "expeditions": "{{count}} Expeditionen",
+      "hunts": "Jagden {{won}}/{{total}}",
       "lifetime": "{{amount}} gesamt"
     },
     "chronicle": {
@@ -353,7 +394,9 @@
       "expeditionResolved": "Expedition ins Gebiet {{tier}} abgeschlossen.",
       "gleiterTrained": "{{count}} Gleiter ausgebildet.",
       "questDone": "Aufgabe erledigt: {{quest}}",
-      "blessing": "Segen gewirkt: {{blessing}} (Stufe {{level}})"
+      "blessing": "Segen gewirkt: {{blessing}} (Stufe {{level}})",
+      "huntWon": "Bestie besiegt: {{beast}}!",
+      "huntLost": "Jagd auf {{beast}} gescheitert."
     },
     "offline": {
       "title": "Willkommen zurück!",
@@ -388,6 +431,8 @@
       "towerTooLow": "Der Wachtturm ist dafür zu niedrig.",
       "expeditionSlotsFull": "Alle Expeditionsplätze sind belegt.",
       "expeditionNotReady": "Diese Expedition ist noch nicht bereit.",
+      "huntActive": "Deine Gleiter jagen bereits eine Bestie.",
+      "huntNotReady": "Der Kampf ist noch nicht vorbei.",
       "invalidChoice": "Ungültige Auswahl.",
       "questNotReady": "Die Aufgabe ist noch nicht erfüllt.",
       "blessingMax": "Dieser Segen ist bereits voll ausgebaut.",

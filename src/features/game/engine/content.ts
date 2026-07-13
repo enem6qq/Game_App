@@ -231,6 +231,74 @@ export const EXPEDITION_TIER_IDS = Object.keys(EXPEDITION_TIERS) as ExpeditionTi
 export const TOWER_LOOT_BONUS_PER_LEVEL = 0.08;
 
 // ---------------------------------------------------------------------------
+// Bestienjagd (Kämpfe gegen Himmelsbestien)
+// ---------------------------------------------------------------------------
+
+export type BeastId = 'nebelschlange' | 'sturmrok' | 'wolkenleviathan';
+
+export type BeastDef = {
+  id: BeastId;
+  emoji: string;
+  durationMs: number;
+  /** Gleiter, die für die Jagd ausrücken. */
+  gleiter: number;
+  /** Kampfkraft der Bestie (gegen die Gleiter-Kampfkraft gewürfelt). */
+  power: number;
+  minTower: number;
+  loot: Partial<Record<ResourceId, number>>;
+  aether: number;
+};
+
+export const BEASTS: Record<BeastId, BeastDef> = {
+  nebelschlange: {
+    id: 'nebelschlange',
+    emoji: '🐍',
+    durationMs: 30 * 60 * 1000,
+    gleiter: 5,
+    power: 55,
+    minTower: 2,
+    loot: { korn: 250, holz: 200, stein: 150 },
+    aether: 8,
+  },
+  sturmrok: {
+    id: 'sturmrok',
+    emoji: '🦅',
+    durationMs: 2 * 60 * 60 * 1000,
+    gleiter: 12,
+    power: 150,
+    minTower: 4,
+    loot: { korn: 900, holz: 750, stein: 550 },
+    aether: 22,
+  },
+  wolkenleviathan: {
+    id: 'wolkenleviathan',
+    emoji: '🐋',
+    durationMs: 6 * 60 * 60 * 1000,
+    gleiter: 22,
+    power: 300,
+    minTower: 6,
+    loot: { korn: 2200, holz: 1900, stein: 1400 },
+    aether: 55,
+  },
+};
+
+export const BEAST_IDS = Object.keys(BEASTS) as BeastId[];
+
+/** Kampfkraft eines Gleiters: Basis + Bonus je Werft-Stufe über 1. */
+export const GLEITER_BASE_POWER = 10;
+export const GLEITER_POWER_PER_WERFT_LEVEL = 2;
+
+/** Würfel-Spanne im Kampf: Kraft × (0,85 … 1,15). */
+export const COMBAT_VARIANCE = 0.15;
+
+/** Verluste: Sieg höchstens 30 %, Niederlage die Hälfte des Trupps. */
+export const HUNT_WIN_MAX_LOSS = 0.3;
+export const HUNT_LOSS_PCT = 0.5;
+
+/** Beute-Anteil bei einer Niederlage (Trostpreis). */
+export const HUNT_CONSOLATION_LOOT = 0.1;
+
+// ---------------------------------------------------------------------------
 // Segen (dauerhafte Boni gegen Aether)
 // ---------------------------------------------------------------------------
 
@@ -270,7 +338,9 @@ export type QuestCondition =
   | { type: 'lifetime'; resource: ResourceId; amount: number }
   | { type: 'gleiter'; count: number }
   | { type: 'expeditions'; count: number }
-  | { type: 'blessings'; count: number };
+  | { type: 'blessings'; count: number }
+  | { type: 'hunts'; count: number }
+  | { type: 'huntsWon'; count: number };
 
 export type QuestDef = {
   id: string;
@@ -345,5 +415,25 @@ export const QUESTS: QuestDef[] = [
     id: 'dock4',
     condition: { type: 'building', building: 'himmelsdock', level: 4 },
     reward: { aether: 25 },
+  },
+  {
+    id: 'jagd1',
+    condition: { type: 'hunts', count: 1 },
+    reward: { aether: 12 },
+  },
+  {
+    id: 'gleiter10',
+    condition: { type: 'gleiter', count: 10 },
+    reward: { korn: 300, holz: 300 },
+  },
+  {
+    id: 'jagdsiege3',
+    condition: { type: 'huntsWon', count: 3 },
+    reward: { aether: 20 },
+  },
+  {
+    id: 'dock5',
+    condition: { type: 'building', building: 'himmelsdock', level: 5 },
+    reward: { aether: 30 },
   },
 ];
