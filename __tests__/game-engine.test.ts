@@ -16,8 +16,10 @@ import {
   buildingRatePerHour,
   buyBlessing,
   claimQuest,
+  collectSpark,
   createInitialState,
   effectiveLevel,
+  exploreWindowAt,
   expeditionSlots,
   formatAmount,
   formatDuration,
@@ -28,9 +30,11 @@ import {
   productionBetween,
   queueSlots,
   questClaimable,
+  remainingSparks,
   renameIsland,
   resolveExpedition,
   resolveHunt,
+  sparksForWindow,
   startExpedition,
   startHunt,
   startUpgrade,
@@ -588,6 +592,50 @@ describe('Bestienjagd', () => {
     expect(result.ok).toBe(true);
     if (!result.ok) return;
     expect(result.result.sieg).toBe(true);
+  });
+});
+
+describe('Erkundung (Aetherfunken)', () => {
+  it('Funken sind pro Fenster deterministisch und im Weltbereich', () => {
+    const w = exploreWindowAt(T0);
+    const a = sparksForWindow(w);
+    const b = sparksForWindow(w);
+    expect(a).toEqual(b);
+    for (const spark of a) {
+      expect(spark.x).toBeGreaterThan(0);
+      expect(spark.amount).toBeGreaterThanOrEqual(1);
+      expect(spark.amount).toBeLessThanOrEqual(3);
+    }
+  });
+
+  it('sammelt Funken genau einmal und schreibt Aether gut', () => {
+    const state = makeState();
+    const spark = remainingSparks(state, T0)[0]!;
+
+    const first = collectSpark(state, spark.index, T0);
+    expect(first.ok).toBe(true);
+    if (!first.ok) return;
+    expect(first.result.amount).toBe(spark.amount);
+    expect(first.state.resources.aether).toBe(spark.amount);
+    expect(remainingSparks(first.state, T0)).toHaveLength(
+      remainingSparks(state, T0).length - 1,
+    );
+
+    expect(collectSpark(first.state, spark.index, T0)).toEqual({
+      ok: false,
+      error: 'invalidChoice',
+    });
+  });
+
+  it('im nächsten Fenster sind wieder alle Funken da', () => {
+    const state = makeState();
+    const spark = remainingSparks(state, T0)[0]!;
+    const collected = collectSpark(state, spark.index, T0);
+    expect(collected.ok).toBe(true);
+    if (!collected.ok) return;
+
+    const nextWindow = T0 + 2 * 60 * 60 * 1000;
+    expect(remainingSparks(collected.state, nextWindow)).toHaveLength(6);
   });
 });
 

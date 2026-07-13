@@ -159,6 +159,17 @@
         }
       }
     },
+    "explore": {
+      "open": "Insel erkunden",
+      "back": "Zurück",
+      "hint": "Halte ◀ ▶ gedrückt zum Laufen · {{count}} Aetherfunken in der Nähe",
+      "tips": {
+        "1": "Der Windstrom wechselt alle zwei Stunden – die Vorhersage verrät, was er als Nächstes begünstigt.",
+        "2": "Nachts sammelt der Aetherkollektor deutlich mehr. Gute Nacht, gute Ernte!",
+        "3": "Baue die Gleiterwerft aus – jede Stufe macht deinen Trupp im Kampf stärker.",
+        "4": "Alle zwei Stunden erscheinen hier draußen neue Aetherfunken. Komm wieder vorbei!"
+      }
+    },
     "hunts": {
       "title": "Bestienjagd",
       "subtitle": "Jeder Gleiter kämpft mit ⚔️ {{power}} Kampfkraft – baue die Gleiterwerft aus, um sie zu stärken.",
@@ -343,6 +354,7 @@
       "windmuehle2": "Baue die Windmühle auf Stufe 2 aus.",
       "hain2": "Baue den Wolkenhain auf Stufe 2 aus.",
       "nebelbruch1": "Errichte den Nebelbruch.",
+      "speicher1": "Errichte den Himmelsspeicher, damit nachts nichts überläuft.",
       "dock2": "Baue das Himmelsdock auf Stufe 2 aus.",
       "wachtturm1": "Errichte den Wachtturm.",
       "werft1": "Errichte die Gleiterwerft.",

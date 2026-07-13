@@ -122,6 +122,8 @@ export type GameState = {
   huntsStarted: number;
   huntsResolved: number;
   huntsWon: number;
+  /** Eingesammelte Aetherfunken des aktuellen Erkundungs-Fensters. */
+  exploration: { window: number; collected: number[] };
   /** Index der aktuell aktiven Aufgabe in der Quest-Kette. */
   questIndex: number;
   blessings: Record<BlessingId, number>;

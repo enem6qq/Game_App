@@ -299,6 +299,16 @@ export const HUNT_LOSS_PCT = 0.5;
 export const HUNT_CONSOLATION_LOOT = 0.1;
 
 // ---------------------------------------------------------------------------
+// Erkundungsmodus
+// ---------------------------------------------------------------------------
+
+/** Alle 2 Stunden erscheinen neue Aetherfunken in der Welt. */
+export const EXPLORE_WINDOW_MS = 2 * 60 * 60 * 1000;
+export const SPARKS_PER_WINDOW = 6;
+/** Breite der begehbaren Welt in Punkten. */
+export const EXPLORE_WORLD_WIDTH = 1400;
+
+// ---------------------------------------------------------------------------
 // Segen (dauerhafte Boni gegen Aether)
 // ---------------------------------------------------------------------------
 
@@ -370,6 +380,13 @@ export const QUESTS: QuestDef[] = [
     id: 'nebelbruch1',
     condition: { type: 'building', building: 'nebelbruch', level: 1 },
     reward: { stein: 60 },
+  },
+  // Früh in der Kette: Ohne Speicher läuft das Lager über Nacht über –
+  // diese Aufgabe macht die Mechanik sichtbar.
+  {
+    id: 'speicher1',
+    condition: { type: 'building', building: 'speicher', level: 1 },
+    reward: { korn: 100, holz: 100 },
   },
   {
     id: 'wachtturm1',

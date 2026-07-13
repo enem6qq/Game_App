@@ -1,6 +1,7 @@
+import { Link, type Href } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Screen, Text } from '@/components/ui';
 import { BuildingCard } from '@/features/game/components/BuildingCard';
@@ -38,9 +39,20 @@ export default function IslandScreen() {
 
       <View style={styles.stack}>
         <IslandScene />
-        <Text variant="caption" muted style={styles.walkHint}>
-          {t('game.island.walkHint')}
-        </Text>
+        <View style={styles.sceneFooter}>
+          <Text variant="caption" muted style={styles.walkHintText}>
+            {t('game.island.walkHint')}
+          </Text>
+          {/* Cast nötig: Die typisierten Routen werden erst beim nächsten
+              „expo start" neu generiert und kennen /explore noch nicht. */}
+          <Link href={'/explore' as Href} asChild>
+            <Pressable>
+              <Text variant="caption" color="#3f87d4">
+                🥾 {t('game.explore.open')}
+              </Text>
+            </Pressable>
+          </Link>
+        </View>
         <SkyBanner />
         <ResourceBar />
         <QuestCard />
@@ -56,5 +68,12 @@ export default function IslandScreen() {
 const styles = StyleSheet.create({
   subtitle: { marginTop: 4, marginBottom: 16 },
   stack: { gap: 12, paddingBottom: 24 },
-  walkHint: { textAlign: 'center', marginTop: -6 },
+  sceneFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: -6,
+    paddingHorizontal: 2,
+  },
+  walkHintText: { flexShrink: 1 },
 });

@@ -13,6 +13,7 @@ import {
   advance,
   buyBlessing,
   claimQuest,
+  collectSpark,
   createInitialState,
   migrateGameState,
   renameIsland,
@@ -56,6 +57,7 @@ type GameStore = {
   chooseExpeditionOption: (expeditionId: string, choiceId: string) => void;
   sendHunt: (beast: BeastId) => void;
   openHuntReport: (huntId: string) => void;
+  pickUpSpark: (sparkIndex: number) => void;
   claimQuestReward: () => void;
   purchaseBlessing: (blessing: BlessingId) => void;
   setIslandName: (name: string) => void;
@@ -130,6 +132,12 @@ export const useGameStore = create<GameStore>()(
           } else {
             set({ lastError: result.error });
           }
+        },
+
+        pickUpSpark: (sparkIndex) => {
+          const result = collectSpark(get().state, sparkIndex, Date.now());
+          // Doppel-Einsammeln still ignorieren (kein Fehler-Banner nötig).
+          if (result.ok) set({ state: result.state });
         },
 
         claimQuestReward: () => apply(claimQuest(get().state, Date.now())),

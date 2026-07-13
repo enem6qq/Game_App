@@ -159,6 +159,17 @@
         }
       }
     },
+    "explore": {
+      "open": "Explore the island",
+      "back": "Back",
+      "hint": "Hold ◀ ▶ to walk · {{count}} aether sparks nearby",
+      "tips": {
+        "1": "The windstream changes every two hours – the forecast tells you what it favours next.",
+        "2": "The Aether Collector gathers far more at night. Good night, good harvest!",
+        "3": "Upgrade the Glider Yard – every level makes your crew stronger in battle.",
+        "4": "New aether sparks appear out here every two hours. Come back soon!"
+      }
+    },
     "hunts": {
       "title": "Beast Hunts",
       "subtitle": "Each glider fights with ⚔️ {{power}} combat power – upgrade the Glider Yard to strengthen them.",
@@ -343,6 +354,7 @@
       "windmuehle2": "Upgrade the Wind Mill to level 2.",
       "hain2": "Upgrade the Cloud Grove to level 2.",
       "nebelbruch1": "Build the Mist Quarry.",
+      "speicher1": "Build the Sky Storehouse so nothing overflows at night.",
       "dock2": "Upgrade the Sky Dock to level 2.",
       "wachtturm1": "Build the Watchtower.",
       "werft1": "Build the Glider Yard.",

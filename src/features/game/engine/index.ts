@@ -6,6 +6,7 @@ export * from './types';
 export * from './content';
 export * from './events';
 export * from './weather';
+export * from './explore';
 export * from './production';
 export * from './quests';
 export * from './engine';

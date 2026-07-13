@@ -30,6 +30,7 @@ import {
   type BeastId,
 } from './content';
 import { EVENTS, getEvent } from './events';
+import { exploreWindowAt, sparksForWindow } from './explore';
 import {
   RESOURCE_IDS,
   ZERO_RESOURCES,
@@ -56,7 +57,7 @@ import type {
   Resources,
 } from './types';
 
-export const GAME_STATE_VERSION = 2;
+export const GAME_STATE_VERSION = 3;
 
 // ---------------------------------------------------------------------------
 // Startzustand
@@ -90,6 +91,7 @@ export function createInitialState(now: number): GameState {
     huntsStarted: 0,
     huntsResolved: 0,
     huntsWon: 0,
+    exploration: { window: -1, collected: [] },
     questIndex: 0,
     blessings: {
       rueckenwind: 0,
@@ -114,6 +116,10 @@ function cloneState(state: GameState): GameState {
     queue: state.queue.map((t) => ({ ...t })),
     expeditions: state.expeditions.map((e) => ({ ...e })),
     hunts: state.hunts.map((h) => ({ ...h })),
+    exploration: {
+      window: state.exploration.window,
+      collected: [...state.exploration.collected],
+    },
     blessings: { ...state.blessings },
     chronicle: [...state.chronicle],
   };
@@ -141,6 +147,7 @@ export function migrateGameState(old: unknown, now: number): GameState {
     huntsStarted: o.huntsStarted ?? 0,
     huntsResolved: o.huntsResolved ?? 0,
     huntsWon: o.huntsWon ?? 0,
+    exploration: o.exploration ?? { window: -1, collected: [] },
     chronicle: o.chronicle ?? base.chronicle,
   };
 }
@@ -527,6 +534,30 @@ export function resolveHunt(
     state: s,
     result: { beast: hunt.beast, sieg, loot, gleiterVerloren, gleiterZurueck },
   };
+}
+
+// ---------------------------------------------------------------------------
+// Erkundung
+// ---------------------------------------------------------------------------
+
+/** Einen Aetherfunken der Welt einsammeln (Erkundungsmodus). */
+export function collectSpark(
+  state: GameState,
+  sparkIndex: number,
+  now: number,
+): ActionResult<{ amount: number }> {
+  const window = exploreWindowAt(now);
+  const spark = sparksForWindow(window).find((s) => s.index === sparkIndex);
+  if (!spark) return { ok: false, error: 'invalidChoice' };
+
+  const collected =
+    state.exploration.window === window ? state.exploration.collected : [];
+  if (collected.includes(sparkIndex)) return { ok: false, error: 'invalidChoice' };
+
+  const s = cloneState(state);
+  s.exploration = { window, collected: [...collected, sparkIndex] };
+  credit(s, { ...ZERO_RESOURCES, aether: spark.amount });
+  return { ok: true, state: s, result: { amount: spark.amount } };
 }
 
 export function claimQuest(state: GameState, now: number): ActionResult {
