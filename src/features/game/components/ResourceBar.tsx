@@ -3,13 +3,13 @@ import { StyleSheet, View } from 'react-native';
 
 import { Card, Text } from '@/components/ui';
 import {
-  RESOURCE_EMOJI,
   RESOURCE_IDS,
   formatAmount,
   formatRate,
   ratesPerHourAt,
   storageCap,
 } from '@/features/game/engine';
+import { ResourceIcon } from '@/features/game/graphics/icons';
 import { useGameStore } from '@/features/game/store';
 import { useTheme } from '@/theme/ThemeProvider';
 
@@ -31,7 +31,7 @@ export function ResourceBar() {
         const nearCap = resource !== 'aether' && amount >= cap * 0.9;
         return (
           <View key={resource} style={styles.item}>
-            <Text style={styles.emoji}>{RESOURCE_EMOJI[resource]}</Text>
+            <ResourceIcon id={resource} size={22} />
             <Text
               variant="body"
               color={nearCap ? theme.colors.warning : theme.colors.text}
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 10,
   },
-  item: { alignItems: 'center', flex: 1 },
-  emoji: { fontSize: 18 },
+  item: { alignItems: 'center', flex: 1, gap: 2 },
   amount: { fontWeight: '600' },
 });

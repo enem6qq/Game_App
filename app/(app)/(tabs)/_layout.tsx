@@ -1,19 +1,14 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Text } from 'react-native';
 
+import { TabGlyph } from '@/features/game/graphics/icons';
 import { useGameTick } from '@/features/game/useGameTick';
 import { useTheme } from '@/theme/ThemeProvider';
 
 /**
- * Untere Tab-Leiste. Die Icons sind als Emojis umgesetzt, damit die App
- * ohne zusätzliche Icon-Bibliothek läuft (bewusste Platzhalter, bis
- * eigene Grafiken entstehen).
+ * Untere Tab-Leiste mit eigenen Vektor-Icons.
  */
-function TabIcon({ symbol, color }: { symbol: string; color: string }) {
-  return <Text style={{ fontSize: 22, color }}>{symbol}</Text>;
-}
 
 export default function TabsLayout() {
   const theme = useTheme();
@@ -38,35 +33,35 @@ export default function TabsLayout() {
         name="index"
         options={{
           title: t('game.tabs.island'),
-          tabBarIcon: ({ color }) => <TabIcon symbol="🏝️" color={color} />,
+          tabBarIcon: ({ color }) => <TabGlyph name="insel" color={color} />,
         }}
       />
       <Tabs.Screen
         name="expeditions"
         options={{
           title: t('game.tabs.expeditions'),
-          tabBarIcon: ({ color }) => <TabIcon symbol="🪂" color={color} />,
+          tabBarIcon: ({ color }) => <TabGlyph name="expedition" color={color} />,
         }}
       />
       <Tabs.Screen
         name="kingdom"
         options={{
           title: t('game.tabs.kingdom'),
-          tabBarIcon: ({ color }) => <TabIcon symbol="📜" color={color} />,
+          tabBarIcon: ({ color }) => <TabGlyph name="reich" color={color} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: t('tabs.profile'),
-          tabBarIcon: ({ color }) => <TabIcon symbol="👤" color={color} />,
+          tabBarIcon: ({ color }) => <TabGlyph name="profil" color={color} />,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: t('tabs.settings'),
-          tabBarIcon: ({ color }) => <TabIcon symbol="⚙️" color={color} />,
+          tabBarIcon: ({ color }) => <TabGlyph name="einstellungen" color={color} />,
         }}
       />
     </Tabs>

@@ -3,11 +3,11 @@ import { StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/ui';
 import {
-  RESOURCE_EMOJI,
   RESOURCE_IDS,
   formatAmount,
   type Resources,
 } from '@/features/game/engine';
+import { ResourceIcon } from '@/features/game/graphics/icons';
 import { useTheme } from '@/theme/ThemeProvider';
 
 type Props = {
@@ -16,7 +16,7 @@ type Props = {
   available?: Resources;
 };
 
-/** Kostenzeile: „🌾 50  🪵 120", Unbezahlbares in Rot. */
+/** Kostenzeile mit Ressourcen-Icons, Unbezahlbares in Rot. */
 export function CostRow({ cost, available }: Props) {
   const theme = useTheme();
   return (
@@ -24,13 +24,15 @@ export function CostRow({ cost, available }: Props) {
       {RESOURCE_IDS.filter((r) => cost[r] > 0).map((resource) => {
         const short = available !== undefined && available[resource] < cost[resource];
         return (
-          <Text
-            key={resource}
-            variant="caption"
-            color={short ? theme.colors.danger : theme.colors.textMuted}
-          >
-            {RESOURCE_EMOJI[resource]} {formatAmount(cost[resource])}
-          </Text>
+          <View key={resource} style={styles.item}>
+            <ResourceIcon id={resource} size={15} />
+            <Text
+              variant="caption"
+              color={short ? theme.colors.danger : theme.colors.textMuted}
+            >
+              {formatAmount(cost[resource])}
+            </Text>
+          </View>
         );
       })}
     </View>
@@ -39,4 +41,5 @@ export function CostRow({ cost, available }: Props) {
 
 const styles = StyleSheet.create({
   row: { flexDirection: 'row', gap: 12, flexWrap: 'wrap' },
+  item: { flexDirection: 'row', alignItems: 'center', gap: 3 },
 });

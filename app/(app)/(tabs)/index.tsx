@@ -10,6 +10,7 @@ import { QuestCard } from '@/features/game/components/QuestCard';
 import { ResourceBar } from '@/features/game/components/ResourceBar';
 import { SkyBanner } from '@/features/game/components/SkyBanner';
 import { BUILDING_IDS, queueSlots } from '@/features/game/engine';
+import { IslandScene } from '@/features/game/graphics/IslandScene';
 import { useGameStore } from '@/features/game/store';
 
 /**
@@ -27,7 +28,7 @@ export default function IslandScreen() {
       <OfflineSummaryModal />
       <ErrorNotice />
 
-      <Text variant="h1">🏝️ {islandName}</Text>
+      <Text variant="h1">{islandName}</Text>
       <Text muted style={styles.subtitle}>
         {t('game.island.queue', {
           used: state.queue.length,
@@ -36,6 +37,7 @@ export default function IslandScreen() {
       </Text>
 
       <View style={styles.stack}>
+        <IslandScene />
         <SkyBanner />
         <ResourceBar />
         <QuestCard />

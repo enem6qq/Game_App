@@ -4,7 +4,6 @@ import { StyleSheet, View } from 'react-native';
 
 import { Button, Card, Text } from '@/components/ui';
 import {
-  RESOURCE_EMOJI,
   RESOURCE_IDS,
   ZERO_RESOURCES,
   cloneResources,
@@ -13,6 +12,7 @@ import {
   questClaimable,
   questProgress,
 } from '@/features/game/engine';
+import { ResourceIcon } from '@/features/game/graphics/icons';
 import { useGameStore } from '@/features/game/store';
 
 /**
@@ -58,9 +58,12 @@ export function QuestCard() {
           {t('game.quests.reward')}:
         </Text>
         {RESOURCE_IDS.filter((r) => reward[r] > 0).map((resource) => (
-          <Text key={resource} variant="caption" muted>
-            {RESOURCE_EMOJI[resource]} {formatAmount(reward[resource])}
-          </Text>
+          <View key={resource} style={styles.rewardItem}>
+            <ResourceIcon id={resource} size={15} />
+            <Text variant="caption" muted>
+              {formatAmount(reward[resource])}
+            </Text>
+          </View>
         ))}
       </View>
 
@@ -81,5 +84,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  rewardRow: { flexDirection: 'row', gap: 10, flexWrap: 'wrap' },
+  rewardRow: { flexDirection: 'row', gap: 10, flexWrap: 'wrap', alignItems: 'center' },
+  rewardItem: { flexDirection: 'row', alignItems: 'center', gap: 3 },
 });

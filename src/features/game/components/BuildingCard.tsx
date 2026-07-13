@@ -6,7 +6,6 @@ import { Button, Card, Text } from '@/components/ui';
 import {
   BUILDINGS,
   MAX_BUILDING_LEVEL,
-  RESOURCE_EMOJI,
   buildTimeMs,
   buildingRatePerHour,
   canAfford,
@@ -17,6 +16,7 @@ import {
   upgradeCost,
   type BuildingId,
 } from '@/features/game/engine';
+import { BuildingIcon, ResourceIcon } from '@/features/game/graphics/icons';
 import { useGameStore } from '@/features/game/store';
 
 import { CostRow } from './CostRow';
@@ -49,9 +49,10 @@ export function BuildingCard({ building }: Props) {
     return (
       <Card style={[styles.card, styles.locked]}>
         <View style={styles.titleRow}>
-          <Text variant="h3">
-            {def.emoji} {t(`game.buildings.${building}.name`)}
-          </Text>
+          <View style={styles.titleLeft}>
+            <BuildingIcon id={building} size={28} />
+            <Text variant="h3">{t(`game.buildings.${building}.name`)}</Text>
+          </View>
           <Text variant="caption" muted>
             🔒
           </Text>
@@ -69,9 +70,10 @@ export function BuildingCard({ building }: Props) {
   return (
     <Card style={styles.card}>
       <View style={styles.titleRow}>
-        <Text variant="h3">
-          {def.emoji} {t(`game.buildings.${building}.name`)}
-        </Text>
+        <View style={styles.titleLeft}>
+          <BuildingIcon id={building} size={28} />
+          <Text variant="h3">{t(`game.buildings.${building}.name`)}</Text>
+        </View>
         <Text variant="caption" muted>
           {t('game.island.level', { level })}
         </Text>
@@ -82,11 +84,15 @@ export function BuildingCard({ building }: Props) {
       </Text>
 
       {def.produces && level > 0 ? (
-        <Text variant="caption" muted>
-          {RESOURCE_EMOJI[def.produces.resource]}{' '}
-          {formatRate(buildingRatePerHour(building, level))}
-          {!atMax ? `  →  ${formatRate(buildingRatePerHour(building, targetLevel))}` : ''}
-        </Text>
+        <View style={styles.rateRow}>
+          <ResourceIcon id={def.produces.resource} size={15} />
+          <Text variant="caption" muted>
+            {formatRate(buildingRatePerHour(building, level))}
+            {!atMax
+              ? `  →  ${formatRate(buildingRatePerHour(building, targetLevel))}`
+              : ''}
+          </Text>
+        </View>
       ) : null}
 
       {task ? (
@@ -132,6 +138,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  titleLeft: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  rateRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   costRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',

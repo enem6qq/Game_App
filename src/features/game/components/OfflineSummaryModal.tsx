@@ -4,11 +4,11 @@ import { Modal, StyleSheet, View } from 'react-native';
 
 import { Button, Card, Text } from '@/components/ui';
 import {
-  RESOURCE_EMOJI,
   RESOURCE_IDS,
   formatAmount,
   formatDuration,
 } from '@/features/game/engine';
+import { ResourceIcon } from '@/features/game/graphics/icons';
 import { useGameStore } from '@/features/game/store';
 
 /**
@@ -39,9 +39,10 @@ export function OfflineSummaryModal() {
           {gains.length > 0 ? (
             <View style={styles.gains}>
               {gains.map((resource) => (
-                <Text key={resource}>
-                  {RESOURCE_EMOJI[resource]} +{formatAmount(summary.gained[resource])}
-                </Text>
+                <View key={resource} style={styles.gainItem}>
+                  <ResourceIcon id={resource} size={17} />
+                  <Text>+{formatAmount(summary.gained[resource])}</Text>
+                </View>
               ))}
             </View>
           ) : null}
@@ -74,4 +75,5 @@ const styles = StyleSheet.create({
   },
   card: { gap: 12 },
   gains: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+  gainItem: { flexDirection: 'row', alignItems: 'center', gap: 4 },
 });

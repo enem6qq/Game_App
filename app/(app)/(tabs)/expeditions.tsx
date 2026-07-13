@@ -11,7 +11,6 @@ import {
   EXPEDITION_TIERS,
   EXPEDITION_TIER_IDS,
   GLEITER_COST,
-  RESOURCE_EMOJI,
   RESOURCE_IDS,
   ZERO_RESOURCES,
   cloneResources,
@@ -23,6 +22,7 @@ import {
   totalGleiter,
   type Expedition,
 } from '@/features/game/engine';
+import { ResourceIcon } from '@/features/game/graphics/icons';
 import { useGameStore } from '@/features/game/store';
 
 /**
@@ -186,9 +186,10 @@ function ExpeditionResultCard() {
       <Text>{t(`game.events.${result.eventId}.results.${result.outcomeId}`)}</Text>
       <View style={styles.rowWrap}>
         {RESOURCE_IDS.filter((r) => result.loot[r] > 0).map((resource) => (
-          <Text key={resource}>
-            {RESOURCE_EMOJI[resource]} +{formatAmount(result.loot[resource])}
-          </Text>
+          <View key={resource} style={styles.lootItem}>
+            <ResourceIcon id={resource} size={16} />
+            <Text>+{formatAmount(result.loot[resource])}</Text>
+          </View>
         ))}
       </View>
       {result.gleiterVerloren > 0 ? (
@@ -265,7 +266,8 @@ const styles = StyleSheet.create({
   locked: { opacity: 0.6 },
   choices: { gap: 8 },
   row: { flexDirection: 'row', gap: 8 },
-  rowWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+  rowWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, alignItems: 'center' },
+  lootItem: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   rowBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',

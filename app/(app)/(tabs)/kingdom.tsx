@@ -8,12 +8,12 @@ import { QuestCard } from '@/features/game/components/QuestCard';
 import {
   BLESSINGS,
   BLESSING_IDS,
-  RESOURCE_EMOJI,
   RESOURCE_IDS,
   formatAmount,
   questProgress,
   type ChronicleEntry,
 } from '@/features/game/engine';
+import { ResourceIcon } from '@/features/game/graphics/icons';
 import { useGameStore } from '@/features/game/store';
 
 /**
@@ -28,9 +28,12 @@ export default function KingdomScreen() {
     <Screen scroll>
       <ErrorNotice />
       <Text variant="h1">📜 {t('game.kingdom.title')}</Text>
-      <Text muted style={styles.subtitle}>
-        ✨ {formatAmount(state.resources.aether)} {t('game.resources.aether')}
-      </Text>
+      <View style={styles.subtitleRow}>
+        <ResourceIcon id="aether" size={16} />
+        <Text muted>
+          {formatAmount(state.resources.aether)} {t('game.resources.aether')}
+        </Text>
+      </View>
 
       <View style={styles.stack}>
         <QuestCard />
@@ -115,12 +118,14 @@ function StatsCard() {
       </Text>
       <View style={styles.rowWrap}>
         {RESOURCE_IDS.map((resource) => (
-          <Text key={resource} variant="caption" muted>
-            {RESOURCE_EMOJI[resource]}{' '}
-            {t('game.stats.lifetime', {
-              amount: formatAmount(state.lifetime[resource]),
-            })}
-          </Text>
+          <View key={resource} style={styles.statItem}>
+            <ResourceIcon id={resource} size={14} />
+            <Text variant="caption" muted>
+              {t('game.stats.lifetime', {
+                amount: formatAmount(state.lifetime[resource]),
+              })}
+            </Text>
+          </View>
         ))}
       </View>
     </Card>
@@ -193,6 +198,14 @@ function ChronicleCard() {
 
 const styles = StyleSheet.create({
   subtitle: { marginTop: 4, marginBottom: 16 },
+  subtitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    marginTop: 4,
+    marginBottom: 16,
+  },
+  statItem: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   stack: { gap: 12, paddingBottom: 24 },
   card: { gap: 10 },
   blessingRow: {

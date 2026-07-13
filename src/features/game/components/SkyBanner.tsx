@@ -4,7 +4,6 @@ import { StyleSheet, View } from 'react-native';
 
 import { Card, Text } from '@/components/ui';
 import {
-  RESOURCE_EMOJI,
   WEATHERS,
   WIND_BONUS,
   isNight,
@@ -12,6 +11,7 @@ import {
   windAt,
   windForecast,
 } from '@/features/game/engine';
+import { ResourceIcon } from '@/features/game/graphics/icons';
 import { useGameStore } from '@/features/game/store';
 
 /**
@@ -40,22 +40,27 @@ export function SkyBanner() {
         {night ? <Text variant="h3">🌙</Text> : null}
       </View>
 
-      <Text muted>
-        {t('game.sky.wind', {
-          resource: t(`game.resources.${wind}`),
-          bonus: Math.round((WIND_BONUS - 1) * 100),
-        })}{' '}
-        {RESOURCE_EMOJI[wind]}
-      </Text>
+      <View style={styles.windRow}>
+        <Text muted>
+          {t('game.sky.wind', {
+            resource: t(`game.resources.${wind}`),
+            bonus: Math.round((WIND_BONUS - 1) * 100),
+          })}
+        </Text>
+        <ResourceIcon id={wind} size={16} />
+      </View>
 
       <View style={styles.forecastRow}>
         <Text variant="caption" muted>
           {t('game.sky.forecast')}:
         </Text>
         {forecast.map((entry) => (
-          <Text key={entry.from} variant="caption" muted>
-            {timeOf(entry.from)} {RESOURCE_EMOJI[entry.resource]}
-          </Text>
+          <View key={entry.from} style={styles.forecastItem}>
+            <Text variant="caption" muted>
+              {timeOf(entry.from)}
+            </Text>
+            <ResourceIcon id={entry.resource} size={13} />
+          </View>
         ))}
       </View>
     </Card>
@@ -65,5 +70,7 @@ export function SkyBanner() {
 const styles = StyleSheet.create({
   card: { gap: 6 },
   row: { flexDirection: 'row', justifyContent: 'space-between' },
-  forecastRow: { flexDirection: 'row', gap: 12, marginTop: 2 },
+  windRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  forecastRow: { flexDirection: 'row', gap: 12, marginTop: 2, alignItems: 'center' },
+  forecastItem: { flexDirection: 'row', alignItems: 'center', gap: 3 },
 });
