@@ -38,6 +38,9 @@ export default function IslandScreen() {
 
       <View style={styles.stack}>
         <IslandScene />
+        <Text variant="caption" muted style={styles.walkHint}>
+          {t('game.island.walkHint')}
+        </Text>
         <SkyBanner />
         <ResourceBar />
         <QuestCard />
@@ -53,4 +56,5 @@ export default function IslandScreen() {
 const styles = StyleSheet.create({
   subtitle: { marginTop: 4, marginBottom: 16 },
   stack: { gap: 12, paddingBottom: 24 },
+  walkHint: { textAlign: 'center', marginTop: -6 },
 });

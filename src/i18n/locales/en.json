@@ -76,7 +76,8 @@
       "upgradingTo": "Upgrading to level {{level}} …",
       "maxLevel": "Maximum level reached",
       "upgradeTo": "Upgrade to level {{level}}",
-      "needsDockUpgrade": "Upgrade the Sky Dock first"
+      "needsDockUpgrade": "Upgrade the Sky Dock first",
+      "walkHint": "Tap the meadow – your keeper walks there."
     },
     "sky": {
       "wind": "Windstream: +{{bonus}} % {{resource}}",

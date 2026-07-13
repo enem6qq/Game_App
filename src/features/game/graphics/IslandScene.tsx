@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { Animated, Easing, StyleSheet, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, Easing, Pressable, StyleSheet, View } from 'react-native';
 import Svg, {
   Circle,
   Defs,
@@ -13,9 +13,15 @@ import Svg, {
   Stop,
 } from 'react-native-svg';
 
-import { isNight, weatherAt, type BuildingId } from '@/features/game/engine';
+import {
+  isNight,
+  totalGleiter,
+  weatherAt,
+  type BuildingId,
+} from '@/features/game/engine';
 import { useGameStore } from '@/features/game/store';
 
+import { GliderSprite, Villager, type VillagerVariant } from './characters';
 import { celestialPosition, skyGradient } from './sky';
 
 /**
@@ -56,11 +62,24 @@ const DROPS: { x: number; y: number }[] = Array.from({ length: 18 }, (_, i) => (
 export function IslandScene() {
   const now = useGameStore((s) => s.state.lastTick);
   const buildings = useGameStore((s) => s.state.buildings);
+  const hasFliers = useGameStore((s) => totalGleiter(s.state) > 0);
+  const [keeperTarget, setKeeperTarget] = useState(145);
 
   const weather = weatherAt(now);
   const night = isNight(now);
   const sky = skyGradient(now, weather);
   const celestial = celestialPosition(now);
+
+  // Ein Gleiter dreht seine Runden, sobald die Insel welche besitzt.
+  const flight = useLoop(26_000);
+  const gliderX = flight.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-50, SCENE_W + 40],
+  });
+  const gliderY = flight.interpolate({
+    inputRange: [0, 0.25, 0.5, 0.75, 1],
+    outputRange: [58, 46, 62, 48, 58],
+  });
 
   // Sanftes Schweben der Insel.
   const bob = useLoop(4600);
@@ -216,11 +235,151 @@ export function IslandScene() {
         <Cloud color={cloudColor} scale={0.5} />
       </Animated.View>
 
-      {/* Ebene 3: die schwebende Insel */}
+      {/* Ebene 3: ein Gleiter dreht seine Runden */}
+      {hasFliers ? (
+        <Animated.View
+          style={[
+            styles.glider,
+            { transform: [{ translateX: gliderX }, { translateY: gliderY }] },
+          ]}
+        >
+          <GliderSprite />
+        </Animated.View>
+      ) : null}
+
+      {/* Ebene 4: die schwebende Insel mit ihren Bewohnern.
+          Tippen auf die Wiese schickt den Hüter dorthin. */}
       <Animated.View style={[styles.island, { transform: [{ translateY: bobY }] }]}>
-        <Island buildings={buildings} night={night} />
+        <Pressable
+          style={styles.islandInner}
+          onPress={(event) => setKeeperTarget(clampWalk(event.nativeEvent.locationX - 7))}
+        >
+          <Island buildings={buildings} night={night} />
+          <Keeper target={keeperTarget} />
+          {buildings.himmelsdock >= 2 ? (
+            <Wanderer
+              variant="siedlerin"
+              fromX={72}
+              toX={118}
+              bottom={47}
+              duration={13_000}
+            />
+          ) : null}
+          {buildings.himmelsdock >= 4 ? (
+            <Wanderer
+              variant="arbeiter"
+              fromX={176}
+              toX={220}
+              bottom={47}
+              duration={11_000}
+            />
+          ) : null}
+        </Pressable>
       </Animated.View>
     </View>
+  );
+}
+
+/** Begehbarer Bereich der Wiese (in Insel-Koordinaten, Breite 280). */
+const WALK_MIN_X = 56;
+const WALK_MAX_X = 216;
+
+function clampWalk(x: number): number {
+  return Math.min(WALK_MAX_X, Math.max(WALK_MIN_X, x));
+}
+
+/**
+ * Der steuerbare Hüter: Läuft zum angetippten Punkt auf der Wiese –
+ * mit Blickrichtung und kleinen Schritten, solange er unterwegs ist.
+ */
+function Keeper({ target }: { target: number }) {
+  const pos = useRef(new Animated.Value(145)).current;
+  const currentX = useRef(145);
+  const [facing, setFacing] = useState<1 | -1>(1);
+  const [moving, setMoving] = useState(false);
+
+  useEffect(() => {
+    const id = pos.addListener(({ value }) => {
+      currentX.current = value;
+    });
+    return () => pos.removeListener(id);
+  }, [pos]);
+
+  useEffect(() => {
+    const distance = Math.abs(target - currentX.current);
+    if (distance < 2) return;
+    setFacing(target > currentX.current ? 1 : -1);
+    setMoving(true);
+    const animation = Animated.timing(pos, {
+      toValue: target,
+      duration: distance * 28, // gemütliches Schritttempo
+      easing: Easing.linear,
+      useNativeDriver: true,
+    });
+    animation.start(({ finished }) => {
+      if (finished) setMoving(false);
+    });
+    return () => animation.stop();
+  }, [target, pos]);
+
+  const hop = useLoop(420);
+  const stepY = hop.interpolate({ inputRange: [0, 0.5, 1], outputRange: [0, -2, 0] });
+
+  return (
+    <Animated.View
+      style={[
+        styles.villager,
+        {
+          bottom: 44,
+          transform: [
+            { translateX: pos },
+            { translateY: moving ? stepY : 0 },
+            { scaleX: facing },
+          ],
+        },
+      ]}
+    >
+      <Villager variant="hueter" />
+    </Animated.View>
+  );
+}
+
+/**
+ * Ein Bewohner, der gemütlich über die Wiese schlendert:
+ * hin und zurück, mit kleinen Hüpfern im Schritt.
+ */
+function Wanderer({
+  variant,
+  fromX,
+  toX,
+  bottom,
+  duration,
+}: {
+  variant: VillagerVariant;
+  fromX: number;
+  toX: number;
+  bottom: number;
+  duration: number;
+}) {
+  const walk = useLoop(duration);
+  const x = walk.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [fromX, toX, fromX],
+  });
+  const step = walk.interpolate({
+    inputRange: [0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1],
+    outputRange: [0, -1.6, 0, -1.6, 0, -1.6, 0, -1.6, 0],
+  });
+
+  return (
+    <Animated.View
+      style={[
+        styles.villager,
+        { bottom, transform: [{ translateX: x }, { translateY: step }] },
+      ]}
+    >
+      <Villager variant={variant} />
+    </Animated.View>
   );
 }
 
@@ -411,6 +570,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   cloud: { position: 'absolute', left: 0 },
+  glider: { position: 'absolute', left: 0, top: 0 },
   island: {
     position: 'absolute',
     bottom: -6,
@@ -418,4 +578,6 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: 'center',
   },
+  islandInner: { width: 280, height: 120 },
+  villager: { position: 'absolute', left: 0 },
 });

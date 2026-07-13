@@ -76,7 +76,8 @@
       "upgradingTo": "Ausbau auf Stufe {{level}} …",
       "maxLevel": "Höchste Stufe erreicht",
       "upgradeTo": "Ausbauen auf Stufe {{level}}",
-      "needsDockUpgrade": "Erst das Himmelsdock ausbauen"
+      "needsDockUpgrade": "Erst das Himmelsdock ausbauen",
+      "walkHint": "Tippe auf die Wiese – dein Hüter läuft hin."
     },
     "sky": {
       "wind": "Windstrom: +{{bonus}} % {{resource}}",
