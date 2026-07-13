@@ -17,6 +17,10 @@ const deviceLanguage = getLocales()[0]?.languageCode ?? 'de';
 const initialLanguage = savedLanguage ?? (deviceLanguage === 'en' ? 'en' : 'de');
 
 i18n.use(initReactI18next).init({
+  // Hermes (die JS-Engine von React Native) bringt kein Intl.PluralRules
+  // mit. Das ältere v3-Pluralformat braucht es nicht – ohne diese Zeile
+  // meldet i18next beim Start einen (harmlosen, aber roten) Fehler.
+  compatibilityJSON: 'v3',
   resources: {
     de: { translation: de },
     en: { translation: en },
