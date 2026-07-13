@@ -9,9 +9,9 @@ import { ExpoConfig, ConfigContext } from 'expo/config';
  */
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: process.env.APP_NAME ?? 'App Vorlage',
-  slug: 'app-vorlage',
-  scheme: 'appvorlage',
+  name: process.env.APP_NAME ?? 'Wolkenfeste',
+  slug: 'wolkenfeste',
+  scheme: 'wolkenfeste',
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/icon.png',
@@ -25,14 +25,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   assetBundlePatterns: ['**/*'],
   ios: {
     supportsTablet: true,
-    bundleIdentifier: 'com.example.appvorlage',
+    bundleIdentifier: 'com.example.wolkenfeste',
   },
   android: {
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
       backgroundColor: '#ffffff',
     },
-    package: 'com.example.appvorlage',
+    package: 'com.example.wolkenfeste',
   },
   plugins: [
     'expo-router',

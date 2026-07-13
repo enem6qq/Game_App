@@ -32,15 +32,15 @@ supabase/           → Backend: Datenbank-Schema, Sicherheit, Server-Funktionen
 
 ## Die wichtigsten Bausteine (und ihre Rollen)
 
-| Baustein            | Aufgabe                                              |
-| ------------------- | ---------------------------------------------------- |
-| **Expo Router**     | Navigation über die Ordnerstruktur                   |
-| **Supabase**        | Anmeldung, Datenbank, Datei-Speicher, Server-Funktionen |
-| **TanStack Query**  | Server-Daten laden & zwischenspeichern               |
-| **Zustand**         | Globaler App-Zustand (Session, Einstellungen)        |
-| **React Hook Form + Zod** | Formulare + Validierung                        |
-| **i18next**         | Mehrsprachigkeit                                      |
-| **Theme-System**    | Einheitliches Aussehen, Hell-/Dunkelmodus            |
+| Baustein                  | Aufgabe                                                 |
+| ------------------------- | ------------------------------------------------------- |
+| **Expo Router**           | Navigation über die Ordnerstruktur                      |
+| **Supabase**              | Anmeldung, Datenbank, Datei-Speicher, Server-Funktionen |
+| **TanStack Query**        | Server-Daten laden & zwischenspeichern                  |
+| **Zustand**               | Globaler App-Zustand (Session, Einstellungen)           |
+| **React Hook Form + Zod** | Formulare + Validierung                                 |
+| **i18next**               | Mehrsprachigkeit                                        |
+| **Theme-System**          | Einheitliches Aussehen, Hell-/Dunkelmodus               |
 
 ## Datenfluss am Beispiel „Einträge"
 

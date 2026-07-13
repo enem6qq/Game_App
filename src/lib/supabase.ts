@@ -2,8 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
 import 'react-native-url-polyfill/auto';
 
-import { config } from './config';
 import type { Database } from '@/types/database';
+
+import { config } from './config';
 
 /**
  * Der Supabase-Client ist das Tor zum Backend:

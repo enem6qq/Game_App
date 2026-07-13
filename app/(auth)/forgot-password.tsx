@@ -45,11 +45,7 @@ export default function ForgotPasswordScreen() {
         error={error ?? undefined}
       />
 
-      <Button
-        title={t('auth.resetPassword')}
-        loading={loading}
-        onPress={onSubmit}
-      />
+      <Button title={t('auth.resetPassword')} loading={loading} onPress={onSubmit} />
     </Screen>
   );
 }

@@ -1,10 +1,11 @@
 import React from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+
+import { useTheme } from '@/theme/ThemeProvider';
 
 import { Button } from './Button';
 import { Text } from './Text';
-import { useTheme } from '@/theme/ThemeProvider';
 
 type Props = {
   /** Zeigt einen Ladeindikator. */

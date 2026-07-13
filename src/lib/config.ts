@@ -4,6 +4,10 @@ import Constants from 'expo-constants';
  * Zentraler Zugriff auf die App-Konfiguration.
  * Alle Werte kommen aus app.config.ts -> extra (gespeist aus .env).
  * So gibt es genau EINE Stelle, an der Konfiguration gelesen wird.
+ *
+ * Wichtig: Das Spiel läuft komplett OHNE Backend (Gast-Modus).
+ * Fehlende Supabase-Werte sind deshalb kein Fehler – `hasSupabase`
+ * zeigt an, ob Online-Funktionen (Konto, Cloud-Spielstand) verfügbar sind.
  */
 type Extra = {
   supabaseUrl?: string;
@@ -14,23 +18,21 @@ type Extra = {
 
 const extra = (Constants.expoConfig?.extra ?? {}) as Extra;
 
-function required(value: string | undefined, name: string): string {
-  if (!value) {
-    // Früher, klarer Fehler statt kryptischer Folgefehler zur Laufzeit.
-    throw new Error(
-      `Konfigurationswert "${name}" fehlt. Trage ihn in deiner .env-Datei ein ` +
-        `(siehe .env.example).`,
-    );
-  }
-  return value;
-}
+/**
+ * Platzhalter, damit der Supabase-Client auch ohne Konfiguration
+ * erzeugt werden kann (er wird dann schlicht nie erfolgreich anfragen).
+ */
+const SUPABASE_URL_PLACEHOLDER = 'https://placeholder.supabase.co';
+const SUPABASE_KEY_PLACEHOLDER = 'placeholder-anon-key';
 
 export const config = {
   environment: extra.environment ?? 'development',
   isProduction: extra.environment === 'production',
+  /** true, sobald echte Supabase-Zugangsdaten hinterlegt sind (.env). */
+  hasSupabase: Boolean(extra.supabaseUrl && extra.supabaseAnonKey),
   supabase: {
-    url: required(extra.supabaseUrl, 'EXPO_PUBLIC_SUPABASE_URL'),
-    anonKey: required(extra.supabaseAnonKey, 'EXPO_PUBLIC_SUPABASE_ANON_KEY'),
+    url: extra.supabaseUrl ?? SUPABASE_URL_PLACEHOLDER,
+    anonKey: extra.supabaseAnonKey ?? SUPABASE_KEY_PLACEHOLDER,
   },
   stripe: {
     publishableKey: extra.stripePublishableKey ?? '',

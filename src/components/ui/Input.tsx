@@ -1,8 +1,9 @@
 import React, { forwardRef } from 'react';
 import { StyleSheet, TextInput, View, type TextInputProps } from 'react-native';
 
-import { Text } from './Text';
 import { useTheme } from '@/theme/ThemeProvider';
+
+import { Text } from './Text';
 
 type Props = TextInputProps & {
   label?: string;

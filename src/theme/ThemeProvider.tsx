@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { useColorScheme } from 'react-native';
 
-import { themes, type AppTheme } from './index';
 import { useSettingsStore } from '@/store/settingsStore';
+
+import { themes, type AppTheme } from './index';
 
 /**
  * Stellt das aktive Theme (hell/dunkel) über die ganze App bereit.
@@ -16,8 +17,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const preference = useSettingsStore((s) => s.themePreference);
 
   const theme = useMemo(() => {
-    const active =
-      preference === 'system' ? (systemScheme ?? 'light') : preference;
+    const active = preference === 'system' ? (systemScheme ?? 'light') : preference;
     return active === 'dark' ? themes.dark : themes.light;
   }, [preference, systemScheme]);
 

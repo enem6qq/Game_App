@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
-import { supabase } from '@/lib/supabase';
 import { logger } from '@/lib/logger';
+import { supabase } from '@/lib/supabase';
 
 /**
  * Zahlungen mit Stripe.
@@ -23,10 +23,9 @@ export function useBilling() {
     setLoading(true);
     try {
       // 1) Zahlungs-Sitzung serverseitig erstellen lassen.
-      const { data, error } = await supabase.functions.invoke(
-        'create-payment-sheet',
-        { body: { plan: 'pro' } },
-      );
+      const { data, error } = await supabase.functions.invoke('create-payment-sheet', {
+        body: { plan: 'pro' },
+      });
       if (error) throw error;
 
       // 2) Mit data.paymentIntent / data.customer das Stripe Payment Sheet

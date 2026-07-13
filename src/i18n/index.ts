@@ -2,9 +2,10 @@ import { getLocales } from 'expo-localization';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+import { useSettingsStore } from '@/store/settingsStore';
+
 import de from './locales/de.json';
 import en from './locales/en.json';
-import { useSettingsStore } from '@/store/settingsStore';
 
 /**
  * Mehrsprachigkeit (i18n).

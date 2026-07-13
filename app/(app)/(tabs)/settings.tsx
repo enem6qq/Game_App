@@ -1,8 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 
 import { Button, Card, Screen, Text } from '@/components/ui';
+import { useGameStore } from '@/features/game/store';
 import i18n from '@/i18n';
 import {
   useSettingsStore,
@@ -18,10 +19,22 @@ export default function SettingsScreen() {
   const { t } = useTranslation();
   const { themePreference, language, setThemePreference, setLanguage } =
     useSettingsStore();
+  const resetGame = useGameStore((s) => s.resetGame);
 
   const changeLanguage = (lng: Language) => {
     setLanguage(lng);
     i18n.changeLanguage(lng);
+  };
+
+  const confirmReset = () => {
+    Alert.alert(t('game.settings.resetTitle'), t('game.settings.resetMessage'), [
+      { text: t('common.cancel'), style: 'cancel' },
+      {
+        text: t('game.settings.resetConfirm'),
+        style: 'destructive',
+        onPress: resetGame,
+      },
+    ]);
   };
 
   const themeOptions: { value: ThemePreference; label: string }[] = [
@@ -62,6 +75,18 @@ export default function SettingsScreen() {
             onPress={() => changeLanguage('en')}
           />
         </View>
+      </Card>
+
+      <Card style={styles.card}>
+        <Text variant="h3">{t('game.settings.saveTitle')}</Text>
+        <Text variant="caption" muted>
+          {t('game.settings.resetHint')}
+        </Text>
+        <Button
+          title={t('game.settings.resetTitle')}
+          variant="danger"
+          onPress={confirmReset}
+        />
       </Card>
     </Screen>
   );

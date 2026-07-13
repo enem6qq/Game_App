@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "App Template",
+    "appName": "Wolkenfeste",
     "save": "Save",
     "cancel": "Cancel",
     "delete": "Delete",
@@ -21,23 +21,18 @@
     "haveAccount": "Already have an account? Sign in",
     "resetPassword": "Reset password",
     "resetSent": "We sent you a reset email.",
-    "welcomeBack": "Welcome back"
+    "welcomeBack": "Welcome back",
+    "guestTitle": "Play right away",
+    "guestHint": "Your progress is stored safely on this device. You only need an account for future online features.",
+    "playAsGuest": "🏝️ Play without an account",
+    "orWithAccount": "— or sign in with an account —",
+    "accountLater": "Online accounts are not set up yet – your adventure runs entirely on your device.",
+    "leaveGuest": "Leave guest mode"
   },
   "tabs": {
     "home": "Home",
-    "items": "Items",
     "profile": "Profile",
     "settings": "Settings"
-  },
-  "items": {
-    "title": "Items",
-    "empty": "No items yet. Create your first one!",
-    "newItem": "New item",
-    "name": "Name",
-    "description": "Description",
-    "created": "Item created",
-    "updated": "Item updated",
-    "deleted": "Item deleted"
   },
   "settings": {
     "title": "Settings",
@@ -56,5 +51,347 @@
     "manage": "Manage subscription",
     "free": "Free",
     "pro": "Pro"
+  },
+  "game": {
+    "tagline": "Your realm above the clouds",
+    "tabs": {
+      "island": "Island",
+      "expeditions": "Expeditions",
+      "kingdom": "Realm"
+    },
+    "kingdom": {
+      "title": "Your Realm"
+    },
+    "resources": {
+      "korn": "Skygrain",
+      "holz": "Driftwood",
+      "stein": "Miststone",
+      "aether": "Aether"
+    },
+    "island": {
+      "defaultName": "Nameless Island",
+      "queue": "Build crew: {{used}} / {{slots}} busy",
+      "needsDock": "Requires Sky Dock level {{level}}",
+      "level": "Level {{level}}",
+      "upgradingTo": "Upgrading to level {{level}} …",
+      "maxLevel": "Maximum level reached",
+      "upgradeTo": "Upgrade to level {{level}}",
+      "needsDockUpgrade": "Upgrade the Sky Dock first"
+    },
+    "sky": {
+      "wind": "Windstream: +{{bonus}} % {{resource}}",
+      "forecast": "Forecast",
+      "weather": {
+        "klar": "Clear skies",
+        "nebelbank": "Fog bank",
+        "sturmfront": "Storm front",
+        "aetherregen": "Aether rain"
+      }
+    },
+    "buildings": {
+      "himmelsdock": {
+        "name": "Sky Dock",
+        "desc": "The heart of your island. Upgrading it unlocks new buildings and raises their level cap."
+      },
+      "windmuehle": {
+        "name": "Wind Mill",
+        "desc": "Grinds the spores drifting in the updraft into nourishing skygrain."
+      },
+      "hain": {
+        "name": "Cloud Grove",
+        "desc": "Driftwood grows here – lighter than air and tougher than oak."
+      },
+      "nebelbruch": {
+        "name": "Mist Quarry",
+        "desc": "Quarries miststone from the underside of the island."
+      },
+      "speicher": {
+        "name": "Sky Storehouse",
+        "desc": "Raises the storage cap for skygrain, driftwood and miststone."
+      },
+      "wachtturm": {
+        "name": "Watchtower",
+        "desc": "Scouts the cloud sea and unlocks expeditions. Higher levels improve the haul."
+      },
+      "werft": {
+        "name": "Glider Yard",
+        "desc": "Builds and maintains gliders for expeditions. Each level raises the glider cap by 5."
+      },
+      "kollektor": {
+        "name": "Aether Collector",
+        "desc": "Harvests aether from the air – far more productive at night and during aether rain."
+      }
+    },
+    "expeditions": {
+      "title": "Expeditions",
+      "subtitle": "Send gliders into the cloud sea and decide what they encounter out there.",
+      "lockedTitle": "Watchtower required",
+      "lockedHint": "Build a Watchtower on your island (Sky Dock level 2) to unlock expeditions.",
+      "gleiter": "Gliders",
+      "needsWerft": "Build the Glider Yard to train gliders.",
+      "home": "at home",
+      "train": "Train +{{count}}",
+      "underway": "{{count}} gliders under way …",
+      "resultTitle": "Expedition report",
+      "resultOk": "Continue",
+      "lost": "{{count}} gliders lost",
+      "returned": "{{count}} gliders returned",
+      "destinations": "Destinations",
+      "needsTower": "Watchtower level {{level}} required",
+      "send": "Send out",
+      "tiers": {
+        "naheInseln": {
+          "name": "Nearby Isles",
+          "desc": "A short flight to the shattered islets within sight."
+        },
+        "nebelmeer": {
+          "name": "Sea of Mist",
+          "desc": "Dense veils swallow every sound – and many a secret."
+        },
+        "sturmguertel": {
+          "name": "Storm Belt",
+          "desc": "Master the raging winds and return rich. Or not at all."
+        },
+        "vergesseneHoehen": {
+          "name": "Forgotten Heights",
+          "desc": "The ruins of the Ancients, high above everything. Few dare the climb."
+        }
+      }
+    },
+    "events": {
+      "treibgutFeld": {
+        "title": "The Debris Field",
+        "text": "A field of beams, barrels and shattered walkways drifts between the clouds – remains of an island that did not survive the Sundering. Some barrels still look sealed.",
+        "choices": {
+          "sichern": "Carefully salvage the edges",
+          "tauchen": "Dive straight into the middle"
+        },
+        "results": {
+          "ruhigeHand": "With steady hands your gliders secure beam after beam. No losses, a decent haul.",
+          "reicheBergung": "A daring flight! At the heart of the field your gliders find untouched supply crates.",
+          "abgestuerzt": "A beam swings wide – one glider plunges into the cloud sea. The others save what can be saved."
+        }
+      },
+      "verlasseneMuehle": {
+        "title": "The Abandoned Mill",
+        "text": "On a lonely rock an old sky mill creaks in the wind. The door stands open, tools still lie on the table – as if the miller had only just stepped out.",
+        "choices": {
+          "vorraete": "Empty the pantry",
+          "keller": "Explore the cellar",
+          "weiterziehen": "Move on respectfully"
+        },
+        "results": {
+          "volleSaecke": "The pantry is full of flour sacks and dried fruit. A good find.",
+          "geheimlager": "Behind a barrel: a trapdoor! Below it a secret cache of valuables and a small vial of aether.",
+          "morscheBalken": "The cellar floor gives way. One glider is buried and barely recovered – the haul suffers.",
+          "sichererKurs": "Your gliders leave the mill in peace and pick up a small, safe haul on the way back."
+        }
+      },
+      "nebellichter": {
+        "title": "Lights in the Mist",
+        "text": "Bluish lights dance inside the fog wall. The old songs warn of them – but they also tell of aether springs that shimmer just like this.",
+        "choices": {
+          "folgen": "Follow the lights",
+          "kursHalten": "Hold your course"
+        },
+        "results": {
+          "aetherquelle": "The lights lead to an open vein of aether! Your gliders scoop up as much as they can carry.",
+          "irrlichter": "Will-o'-wisps! In the dense grey you lose a glider and precious time before the crew finds a way out.",
+          "planTreu": "Your gliders resist the temptation and bring the planned cargo safely home."
+        }
+      },
+      "sturmreiter": {
+        "title": "The Storm Riders",
+        "text": "A band of foreign glider riders crosses your course. They carry bulging cargo nets and eye your load with open interest.",
+        "choices": {
+          "handeln": "Offer to trade",
+          "wettflug": "Challenge them to a race",
+          "ausweichen": "Evade and fly on"
+        },
+        "results": {
+          "guterTausch": "A deal is struck: your charts for their cargo. Both sides fly off satisfied.",
+          "uebersTischGezogen": "The strangers haggle like devils. Only later do you realise how bad the trade was.",
+          "gewonnen": "Your best flyer wins the race by lengths! The storm riders grudgingly pay up.",
+          "verloren": "A narrow loss! The stake is gone, and one glider limps home with a broken strut.",
+          "unbehelligt": "You slip into a cloud bank and leave the band behind. Better safe than sorry."
+        }
+      },
+      "aetherquelle": {
+        "title": "The Aether Spring",
+        "text": "Shimmering liquid aether trickles from a crack in a boulder and evaporates in the wind. A rare sight – and a temptation.",
+        "choices": {
+          "schoepfen": "Skim it off gently",
+          "aufstauen": "Dam up the spring"
+        },
+        "results": {
+          "volleFlaschen": "Bottle after bottle fills with pure aether. A calm, valuable day.",
+          "reicheErnte": "The dam holds! Over hours a small pool gathers – a splendid aether harvest.",
+          "quelleVersiegt": "The pressure finds another way: the spring runs dry before your eyes. Only a few drops remain."
+        }
+      },
+      "alteBibliothek": {
+        "title": "The Old Library",
+        "text": "Half sunken into the rock lies a library of the Ancients. Pages drift through broken domes like snowflakes. Much is lost – but not everything.",
+        "choices": {
+          "kartenBergen": "Salvage maps and charts",
+          "archivDurchsuchen": "Open the sealed archive"
+        },
+        "results": {
+          "neueRouten": "The salvaged charts reveal safe routes and forgotten depots. It pays off immediately.",
+          "verboteneFormel": "Inside the archive: a treatise on aether binding! A treasure of knowledge – plus a pouch of aether dust.",
+          "staubUndAsche": "The seal breaks, but everything behind it crumbled to dust long ago. At least the shelves make good firewood."
+        }
+      },
+      "wolkenwale": {
+        "title": "The Cloud Whales",
+        "text": "A pod of cloud whales drifts majestically through the blue. Whole gardens of windweed grow on their backs – and their wake opens lanes through the mist.",
+        "choices": {
+          "imWindschatten": "Ride in their slipstream",
+          "anlanden": "Land on a whale's back",
+          "ziehenLassen": "Let the pod pass"
+        },
+        "results": {
+          "krautgaerten": "In the whales' wake you effortlessly gather drifting windweed – the nets fill quickly.",
+          "walruecken": "The great one tolerates you! Its back gardens are full of fruit, and aether glitters in its furrows.",
+          "abgeschuettelt": "The whale dives! One glider is thrown off and has to be abandoned. The pod vanishes into the grey.",
+          "stillerGruss": "You fly along at a reverent distance. By evening you find a quiet little haul."
+        }
+      },
+      "gestrandeteHaendlerin": {
+        "title": "The Stranded Trader",
+        "text": "On a tiny rock a trader crouches beside her wrecked cargo glider. She waves with both arms – then points meaningfully at her bulging freight.",
+        "choices": {
+          "helfen": "Help with the repairs",
+          "frachtKaufen": "Buy the cargo cheaply"
+        },
+        "results": {
+          "dankbarkeit": "Together the glider is quickly patched up. In gratitude she leaves you goods and a phial of aether – and remembers your island.",
+          "schnaeppchen": "In her plight she sells far below value. A fat deal – though her gaze follows you for a long time.",
+          "ladenhueter": "Back home it turns out half the crates hold worthless junk. She was craftier than she looked."
+        }
+      },
+      "splitterinsel": {
+        "title": "The Splinter Isle",
+        "text": "An island shard full of glittering ore veins slowly sinks towards the cloud sea. In a few hours it will be lost – whatever you take must be taken fast.",
+        "choices": {
+          "randAbbauen": "Mine the edges",
+          "kernSprengen": "Crack open the core"
+        },
+        "results": {
+          "sichereAusbeute": "You free the outer veins and are long gone when the shard tips over. A solid haul.",
+          "erzregen": "The core bursts in a rain of ore and miststone! The gliders catch whatever the nets can hold.",
+          "kollaps": "The shard breaks apart too soon! Gliders fall into the grey – the survivors salvage only scraps."
+        }
+      },
+      "stillerTurm": {
+        "title": "The Silent Tower",
+        "text": "A tower of the Ancients rises motionless from the clouds. No birds, no wind, no sound – only an open door and a faint pulsing deep inside.",
+        "choices": {
+          "schwelleWachen": "Camp at the threshold and trade",
+          "hinabsteigen": "Follow the pulsing downwards"
+        },
+        "results": {
+          "friedlicherHandel": "Travellers use the tower as a resting place. You trade goods, stories and a few grains of aether.",
+          "herzkammer": "Deep below beats a heart chamber of pure aether! You fill every bottle – a legendary find.",
+          "tuerFaelltZu": "The door slams shut behind the vanguard! Hours pass before the mechanism releases – one glider is never found."
+        }
+      }
+    },
+    "quests": {
+      "title": "Quest",
+      "allDone": "All quests complete – your realm is thriving! More chapters will arrive with the next update.",
+      "reward": "Reward",
+      "claim": "Claim reward",
+      "open": "Not done yet",
+      "windmuehle2": "Upgrade the Wind Mill to level 2.",
+      "hain2": "Upgrade the Cloud Grove to level 2.",
+      "nebelbruch1": "Build the Mist Quarry.",
+      "dock2": "Upgrade the Sky Dock to level 2.",
+      "wachtturm1": "Build the Watchtower.",
+      "werft1": "Build the Glider Yard.",
+      "gleiter3": "Train 3 gliders.",
+      "expedition1": "Complete your first expedition.",
+      "dock3": "Upgrade the Sky Dock to level 3.",
+      "kollektor1": "Build the Aether Collector.",
+      "korn2000": "Collect 2,000 skygrain in total.",
+      "segen1": "Grant your first blessing.",
+      "dock4": "Upgrade the Sky Dock to level 4."
+    },
+    "blessings": {
+      "title": "Blessings",
+      "hint": "Permanent bonuses – paid with aether from expeditions, quests and the collector.",
+      "rueckenwind": {
+        "name": "Tailwind",
+        "desc": "+10 % production per level"
+      },
+      "fleissigeHaende": {
+        "name": "Diligent Hands",
+        "desc": "−10 % build time per level"
+      },
+      "weitblick": {
+        "name": "Farsight",
+        "desc": "+15 % expedition haul per level"
+      },
+      "zweiterBautrupp": {
+        "name": "Second Build Crew",
+        "desc": "A second construction at the same time"
+      }
+    },
+    "stats": {
+      "title": "Statistics",
+      "age": "Day {{days}}",
+      "dock": "Dock level {{level}}",
+      "quests": "Quests {{done}}/{{total}}",
+      "expeditions": "{{count}} expeditions",
+      "lifetime": "{{amount}} total"
+    },
+    "chronicle": {
+      "title": "Island Chronicle",
+      "welcome": "A nameless island rises from the cloud sea. Your story begins.",
+      "buildFinished": "{{building}} completed at level {{level}}.",
+      "expeditionArrived": "Expedition returned from {{tier}} – an event awaits.",
+      "expeditionResolved": "Expedition to {{tier}} completed.",
+      "gleiterTrained": "{{count}} gliders trained.",
+      "questDone": "Quest completed: {{quest}}",
+      "blessing": "Blessing granted: {{blessing}} (level {{level}})"
+    },
+    "offline": {
+      "title": "Welcome back!",
+      "away": "You were away for {{duration}}. Your island kept busy:",
+      "builds": "{{count}} construction(s) finished",
+      "expeditions": "{{count}} expedition(s) returned",
+      "continue": "Carry on"
+    },
+    "profile": {
+      "islandName": "Name of your island",
+      "guest": "Guest",
+      "guestHint": "You are playing without an account. Create one later to back up your progress online.",
+      "localOnly": "Your progress is stored safely on this device.",
+      "accountHint": "Signed in – ready for upcoming online features."
+    },
+    "settings": {
+      "saveTitle": "Save game",
+      "resetHint": "Resets the island completely. This cannot be undone.",
+      "resetTitle": "Reset save game",
+      "resetMessage": "Your island, all buildings and all progress will be lost forever. Are you sure?",
+      "resetConfirm": "Yes, reset everything"
+    },
+    "errors": {
+      "notEnoughResources": "Not enough resources.",
+      "notEnoughAether": "Not enough aether.",
+      "queueFull": "Your build crew is already busy.",
+      "dockLimit": "Upgrade the Sky Dock first.",
+      "maxLevel": "Maximum level reached.",
+      "locked": "Not unlocked yet.",
+      "notEnoughGleiter": "Not enough gliders at home.",
+      "gleiterCap": "Glider cap reached – upgrade the Glider Yard.",
+      "towerTooLow": "The Watchtower is too low for that.",
+      "expeditionSlotsFull": "All expedition slots are in use.",
+      "expeditionNotReady": "This expedition is not ready yet.",
+      "invalidChoice": "Invalid choice.",
+      "questNotReady": "The quest is not fulfilled yet.",
+      "blessingMax": "This blessing is already at maximum.",
+      "invalidName": "Please enter a name with 1–24 characters."
+    }
   }
 }

@@ -1,32 +1,38 @@
-# 📱 App-Vorlage
+# 🏝️ Wolkenfeste
 
-Eine wiederverwendbare, **voll ausgestattete** Vorlage für mobile Apps.
-Einmal aufgesetzt, sparst du bei jeder neuen App die immer gleiche
-Grundarbeit: Anmeldung, Datenbank, Navigation, Design, Tests und mehr sind
-schon da. Du fängst direkt mit deiner eigentlichen Idee an.
+**Wolkenfeste** ist ein Aufbau-Strategiespiel für iOS und Android: Nach der
+Großen Zerreißung schwebt die Welt in Inseln über einem endlosen Wolkenmeer.
+Baue deine Himmelsinsel aus, plane mit **Windstrom und Wetterfronten**,
+schicke **Gleiter auf Expeditionen** mit erzählten Ereignissen und
+Entscheidungen – und sammle **Aether** für dauerhafte Segen.
 
 > Gebaut mit **Expo (React Native) + TypeScript**. Eine Codebasis für
-> **iOS und Android**.
+> iOS und Android. **Sofort spielbar – ohne Konto, ohne Backend.**
+
+Das komplette Spieldesign (Welt, Systeme, Balancing-Formeln) steht in
+[`docs/game-design.md`](docs/game-design.md).
 
 ---
 
-## ✨ Was ist alles drin?
+## ✨ Was das Spiel besonders macht
 
-| Bereich            | Enthalten                                                        |
-| ------------------ | --------------------------------------------------------------- |
-| 🧭 **Navigation**  | Expo Router (dateibasiert), Tabs, geschützte Bereiche           |
-| 🔐 **Anmeldung**   | Login, Registrierung, Passwort-Reset (Supabase Auth)            |
-| 👥 **Benutzerrollen** | Profile mit Rollen (`user` / `admin`) via Row-Level-Security |
-| 🗄️ **Datenbank**   | Postgres via Supabase, Beispiel-CRUD („Einträge")               |
-| 💳 **Zahlungen**   | Stripe-Grundgerüst (App + Server-Funktion)                       |
-| 🔔 **Push**        | Benachrichtigungen (Expo Notifications)                          |
-| 🎨 **Design**      | Theme-System mit Hell-/Dunkelmodus                              |
-| 🌍 **Sprachen**    | Mehrsprachig (Deutsch/Englisch), leicht erweiterbar             |
-| ✅ **Formulare**    | React Hook Form + Zod-Validierung                              |
-| 🧪 **Tests**       | Jest + Testing Library, Beispiel-Tests                          |
-| 🧹 **Qualität**    | ESLint, Prettier, TypeScript strict                            |
-| 🤖 **CI**          | GitHub Actions (Lint, Typen, Tests bei jedem Push)             |
-| 📦 **State**       | Zustand (App-Zustand) + TanStack Query (Server-Daten)          |
+- 🌬️ **Windstrom & Wetter in Echtzeit:** Wind (alle 2 h) und Wetterfronten
+  (alle 3 h) verändern die Produktion – deterministisch aus der echten
+  Uhrzeit berechnet, mit **Vorhersage** zum Planen. Nachts sammelt der
+  Aetherkollektor mehr.
+- 🪂 **Expeditionen mit Geschichten:** Jede Rückkehr endet in einem von
+  zehn handgeschriebenen Ereignissen mit Entscheidungen – vorsichtig,
+  mutig oder neugierig?
+- 🕰️ **Offline-Fortschritt:** Die Insel arbeitet bis zu 8 Stunden weiter;
+  Wetterwechsel während der Abwesenheit werden **fensterweise exakt**
+  angerechnet.
+- 📖 **Inselchronik:** Jeder Ausbau, jede Expedition, jede Aufgabe wird
+  Teil der Geschichte deiner Insel.
+- ✨ **Segen:** Aether aus Expeditionen und Aufgaben fließt in dauerhafte
+  Boni (Produktion, Bauzeit, Beute, zweiter Bautrupp).
+
+Alle Inhalte (Welt, Namen, Texte, Zahlen) sind **eigens für dieses Projekt
+entworfen** – keine fremden Assets oder Texte.
 
 ---
 
@@ -36,43 +42,39 @@ schon da. Du fängst direkt mit deiner eigentlichen Idee an.
 # 1. Abhängigkeiten installieren
 npm install
 
-# 2. Konfiguration anlegen
-cp .env.example .env
-#    -> Supabase-Werte in .env eintragen (siehe supabase/README.md)
-
-# 3. Datenbank-Schema einspielen
-#    -> supabase/migrations/0001_init.sql im Supabase-Dashboard ausführen
-
-# 4. App starten
+# 2. App starten
 npm start
 ```
 
-Dann die **Expo Go**-App auf dem Handy öffnen und den QR-Code scannen.
+Dann die **Expo Go**-App auf dem Handy öffnen, QR-Code scannen und im
+Login-Screen **„Ohne Konto spielen"** wählen – fertig.
 
 > ℹ️ Beim ersten Start empfiehlt sich `npx expo install --fix`, damit alle
 > Paketversionen exakt zur Expo-Version passen.
+>
+> Eine `.env` ist **optional** (siehe `.env.example`) und erst für spätere
+> Online-Funktionen (Supabase-Konto, Cloud-Spielstand) nötig.
 
 ---
 
 ## 📂 Projektstruktur (Kurzfassung)
 
 ```
-app/          Bildschirme & Navigation
-src/          Der eigentliche Code (Features, UI, Logik)
-supabase/     Backend: Datenbank, Sicherheit, Server-Funktionen
-docs/         Dokumentation & Checklisten
+app/                    Screens & Navigation (Expo Router)
+  (app)/(tabs)/         Insel · Expeditionen · Reich · Profil · Einstellungen
+src/features/game/
+  engine/               Spiel-Engine: pures TypeScript, vollständig getestet
+  components/           Spiel-UI-Bausteine (Ressourcen, Wetter, Gebäude …)
+  store.ts              Spielstand (Zustand + persist, AsyncStorage)
+src/                    Design-System, Auth, i18n (DE/EN), Konfiguration
+supabase/               Vorbereitetes Backend für spätere Online-Funktionen
+docs/                   game-design.md, architecture.md
 ```
 
-Ausführlich erklärt in [`docs/architecture.md`](docs/architecture.md).
-
----
-
-## 🆕 Neue App daraus bauen
-
-Die Schritt-für-Schritt-Anleitung steht in
-[`docs/neue-app-checkliste.md`](docs/neue-app-checkliste.md).
-
-Kurz gesagt: kopieren → umbenennen → Supabase verbinden → loslegen.
+**Architektur-Grundsatz:** Alle Spielregeln leben als pure Funktionen in
+`src/features/game/engine/` (Zustand + Zeitpunkt → neuer Zustand) – ohne
+React-Abhängigkeit, deterministisch und per Jest abgesichert. UI und Store
+sind dünne Schichten darüber.
 
 ---
 
@@ -84,27 +86,24 @@ npm run android    # direkt auf Android starten
 npm run ios        # direkt auf iOS starten
 npm run lint       # Code-Stil prüfen
 npm run typecheck  # TypeScript-Typen prüfen
-npm test           # Tests ausführen
+npm test           # Tests ausführen (55 Tests, u. a. komplette Engine)
 npm run format     # Code automatisch formatieren
 ```
 
 ---
 
-## 🧩 Warum dieser Aufbau?
+## 🗺️ Roadmap
 
-- **Feature-orientiert:** Jedes Feature (`auth`, `items`, `billing`) liegt in
-  sich geschlossen in `src/features/`. Neues Feature = neuer Ordner nach dem
-  gleichen Muster. Alte Features lassen sich sauber löschen.
-- **Eine Quelle der Wahrheit:** Konfiguration (`src/lib/config.ts`), Design
-  (`src/theme/`) und Typen (`src/types/`) sind zentral. Änderungen wirken
-  überall.
-- **Sicherheit an der richtigen Stelle:** Die Datenzugriffe sind in der
-  Datenbank abgesichert (RLS), nicht nur in der App.
-
-Details und Begründungen: [`docs/architecture.md`](docs/architecture.md).
+1. Cloud-Spielstand über Supabase (Konto-Login ist schon vorbereitet)
+2. Rangliste (Inselwert) und Saison-Events
+3. Asynchrones Erkunden fremder Inseln
+4. Relikte/Helden aus den Vergessenen Höhen
+5. Eigene Grafiken & Sound (aktuell bewusst Emoji-Platzhalter)
+6. Push-Benachrichtigung „Dein Ausbau ist fertig" (expo-notifications ist
+   bereits eingerichtet)
 
 ---
 
 ## 📄 Lizenz
 
-MIT – frei nutzbar. Siehe [`LICENSE`](LICENSE).
+MIT – siehe [`LICENSE`](LICENSE).

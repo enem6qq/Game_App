@@ -22,11 +22,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
 
     // Auf spätere Änderungen reagieren (Login, Logout, Token-Refresh).
-    const { data: subscription } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setSession(session);
-      },
-    );
+    const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
 
     return () => subscription.subscription.unsubscribe();
   }, [setSession, setInitializing]);

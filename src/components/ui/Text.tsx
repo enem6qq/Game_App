@@ -15,13 +15,7 @@ type Props = RNTextProps & {
  * Text-Komponente, die automatisch Farbe und Größe aus dem Theme nimmt.
  * Immer diese statt des rohen <Text> verwenden – so bleibt alles konsistent.
  */
-export function Text({
-  variant = 'body',
-  muted,
-  color,
-  style,
-  ...rest
-}: Props) {
+export function Text({ variant = 'body', muted, color, style, ...rest }: Props) {
   const theme = useTheme();
   return (
     <RNText

@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "App Vorlage",
+    "appName": "Wolkenfeste",
     "save": "Speichern",
     "cancel": "Abbrechen",
     "delete": "Löschen",
@@ -21,23 +21,18 @@
     "haveAccount": "Bereits ein Konto? Anmelden",
     "resetPassword": "Passwort zurücksetzen",
     "resetSent": "Wir haben dir eine E-Mail zum Zurücksetzen geschickt.",
-    "welcomeBack": "Willkommen zurück"
+    "welcomeBack": "Willkommen zurück",
+    "guestTitle": "Sofort losspielen",
+    "guestHint": "Dein Spielstand wird sicher auf diesem Gerät gespeichert. Ein Konto brauchst du nur für spätere Online-Funktionen.",
+    "playAsGuest": "🏝️ Ohne Konto spielen",
+    "orWithAccount": "— oder mit Konto anmelden —",
+    "accountLater": "Online-Konten sind noch nicht eingerichtet – dein Abenteuer läuft komplett auf deinem Gerät.",
+    "leaveGuest": "Gast-Modus beenden"
   },
   "tabs": {
     "home": "Start",
-    "items": "Einträge",
     "profile": "Profil",
     "settings": "Einstellungen"
-  },
-  "items": {
-    "title": "Einträge",
-    "empty": "Noch keine Einträge. Lege deinen ersten an!",
-    "newItem": "Neuer Eintrag",
-    "name": "Bezeichnung",
-    "description": "Beschreibung",
-    "created": "Eintrag erstellt",
-    "updated": "Eintrag aktualisiert",
-    "deleted": "Eintrag gelöscht"
   },
   "settings": {
     "title": "Einstellungen",
@@ -56,5 +51,347 @@
     "manage": "Abonnement verwalten",
     "free": "Kostenlos",
     "pro": "Pro"
+  },
+  "game": {
+    "tagline": "Dein Reich über den Wolken",
+    "tabs": {
+      "island": "Insel",
+      "expeditions": "Expeditionen",
+      "kingdom": "Reich"
+    },
+    "kingdom": {
+      "title": "Dein Reich"
+    },
+    "resources": {
+      "korn": "Luftkorn",
+      "holz": "Schwebholz",
+      "stein": "Nebelstein",
+      "aether": "Aether"
+    },
+    "island": {
+      "defaultName": "Namenlose Insel",
+      "queue": "Bautrupp: {{used}} / {{slots}} beschäftigt",
+      "needsDock": "Benötigt Himmelsdock Stufe {{level}}",
+      "level": "Stufe {{level}}",
+      "upgradingTo": "Ausbau auf Stufe {{level}} …",
+      "maxLevel": "Höchste Stufe erreicht",
+      "upgradeTo": "Ausbauen auf Stufe {{level}}",
+      "needsDockUpgrade": "Erst das Himmelsdock ausbauen"
+    },
+    "sky": {
+      "wind": "Windstrom: +{{bonus}} % {{resource}}",
+      "forecast": "Vorhersage",
+      "weather": {
+        "klar": "Klarhimmel",
+        "nebelbank": "Nebelbank",
+        "sturmfront": "Sturmfront",
+        "aetherregen": "Aetherregen"
+      }
+    },
+    "buildings": {
+      "himmelsdock": {
+        "name": "Himmelsdock",
+        "desc": "Das Herz deiner Insel. Sein Ausbau schaltet neue Gebäude frei und hebt deren Stufenlimit."
+      },
+      "windmuehle": {
+        "name": "Windmühle",
+        "desc": "Mahlt die im Aufwind treibenden Sporen zu nahrhaftem Luftkorn."
+      },
+      "hain": {
+        "name": "Wolkenhain",
+        "desc": "Hier wächst Schwebholz – leichter als Luft und fester als Eiche."
+      },
+      "nebelbruch": {
+        "name": "Nebelbruch",
+        "desc": "Bricht Nebelstein aus der Unterseite der Insel."
+      },
+      "speicher": {
+        "name": "Himmelsspeicher",
+        "desc": "Erhöht das Lagerlimit für Luftkorn, Schwebholz und Nebelstein."
+      },
+      "wachtturm": {
+        "name": "Wachtturm",
+        "desc": "Späht ins Wolkenmeer und schaltet Expeditionen frei. Höhere Stufen verbessern die Ausbeute."
+      },
+      "werft": {
+        "name": "Gleiterwerft",
+        "desc": "Baut und wartet Gleiter für Expeditionen. Jede Stufe erhöht das Gleiter-Limit um 5."
+      },
+      "kollektor": {
+        "name": "Aetherkollektor",
+        "desc": "Fängt Aether aus der Luft – nachts und bei Aetherregen deutlich ergiebiger."
+      }
+    },
+    "expeditions": {
+      "title": "Expeditionen",
+      "subtitle": "Schicke Gleiter ins Wolkenmeer und entscheide, was sie dort erleben.",
+      "lockedTitle": "Wachtturm benötigt",
+      "lockedHint": "Errichte auf deiner Insel einen Wachtturm (Himmelsdock Stufe 2), um Expeditionen freizuschalten.",
+      "gleiter": "Gleiter",
+      "needsWerft": "Errichte die Gleiterwerft, um Gleiter auszubilden.",
+      "home": "auf der Insel",
+      "train": "+{{count}} ausbilden",
+      "underway": "{{count}} Gleiter unterwegs …",
+      "resultTitle": "Bericht der Expedition",
+      "resultOk": "Weiter",
+      "lost": "{{count}} Gleiter verloren",
+      "returned": "{{count}} Gleiter zurückgekehrt",
+      "destinations": "Ziele",
+      "needsTower": "Wachtturm Stufe {{level}} nötig",
+      "send": "Losschicken",
+      "tiers": {
+        "naheInseln": {
+          "name": "Nahe Inseln",
+          "desc": "Ein kurzer Flug zu den Trümmerinseln in Sichtweite."
+        },
+        "nebelmeer": {
+          "name": "Nebelmeer",
+          "desc": "Dichte Schwaden verschlucken jedes Geräusch – und manches Geheimnis."
+        },
+        "sturmguertel": {
+          "name": "Sturmgürtel",
+          "desc": "Wer die tobenden Winde meistert, kehrt reich zurück. Oder gar nicht."
+        },
+        "vergesseneHoehen": {
+          "name": "Vergessene Höhen",
+          "desc": "Die Ruinen der Alten, hoch über allem. Kaum jemand wagt sich hinauf."
+        }
+      }
+    },
+    "events": {
+      "treibgutFeld": {
+        "title": "Das Treibgutfeld",
+        "text": "Zwischen den Wolken treibt ein Feld aus Balken, Fässern und zerborstenen Stegen – Überreste einer Insel, die die Zerreißung nicht überstand. Einige Fässer wirken noch verschlossen.",
+        "choices": {
+          "sichern": "Vorsichtig das Randgut bergen",
+          "tauchen": "Mitten hinein tauchen"
+        },
+        "results": {
+          "ruhigeHand": "Mit ruhiger Hand sichern deine Gleiter Balken um Balken. Keine Verluste, ordentliche Beute.",
+          "reicheBergung": "Ein waghalsiger Flug! Im Herzen des Feldes finden deine Gleiter unversehrte Vorratskisten.",
+          "abgestuerzt": "Ein Balken schlägt quer – ein Gleiter stürzt ins Wolkenmeer. Die anderen retten, was zu retten ist."
+        }
+      },
+      "verlasseneMuehle": {
+        "title": "Die verlassene Mühle",
+        "text": "Auf einem einsamen Felsen dreht sich eine alte Himmelsmühle knarrend im Wind. Die Tür steht offen, auf dem Tisch liegt noch Werkzeug – als wäre die Müllerin nur kurz fort.",
+        "choices": {
+          "vorraete": "Die Vorratskammer leeren",
+          "keller": "Den Keller erkunden",
+          "weiterziehen": "Respektvoll weiterziehen"
+        },
+        "results": {
+          "volleSaecke": "Die Kammer ist voller Mehlsäcke und getrockneter Früchte. Ein guter Fund.",
+          "geheimlager": "Hinter einem Fass: eine Falltür! Darunter ein Geheimlager voller Kostbarkeiten und ein Fläschchen Aether.",
+          "morscheBalken": "Der Kellerboden gibt nach. Ein Gleiter wird verschüttet und nur knapp geborgen – die Ausbeute leidet.",
+          "sichererKurs": "Deine Gleiter lassen die Mühle in Frieden und finden auf dem Rückweg eine kleine, sichere Beute."
+        }
+      },
+      "nebellichter": {
+        "title": "Lichter im Nebel",
+        "text": "In der Nebelwand tanzen bläuliche Lichter. Die alten Lieder warnen vor ihnen – aber sie erzählen auch von Aetherquellen, die genau so schimmern.",
+        "choices": {
+          "folgen": "Den Lichtern folgen",
+          "kursHalten": "Kurs halten"
+        },
+        "results": {
+          "aetherquelle": "Die Lichter führen zu einer offenen Aetherader! Deine Gleiter schöpfen, so viel sie tragen können.",
+          "irrlichter": "Irrlichter! Im dichten Grau verliert ihr einen Gleiter und viel Zeit, ehe der Trupp herausfindet.",
+          "planTreu": "Deine Gleiter widerstehen der Versuchung und bringen die geplante Fracht sicher nach Hause."
+        }
+      },
+      "sturmreiter": {
+        "title": "Die Sturmreiter",
+        "text": "Eine Bande fremder Gleiterreiter kreuzt euren Kurs. Sie führen pralle Frachtnetze mit sich und mustern eure Ladung mit unverhohlenem Interesse.",
+        "choices": {
+          "handeln": "Handel anbieten",
+          "wettflug": "Zum Wettflug herausfordern",
+          "ausweichen": "Ausweichen und weiterfliegen"
+        },
+        "results": {
+          "guterTausch": "Man wird handelseinig: eure Karten gegen ihre Fracht. Beide Seiten fliegen zufrieden davon.",
+          "uebersTischGezogen": "Die Fremden feilschen wie die Teufel. Erst später merkt ihr, wie schlecht der Tausch war.",
+          "gewonnen": "Euer bester Flieger gewinnt das Rennen um Längen! Die Sturmreiter zahlen den Einsatz zähneknirschend aus.",
+          "verloren": "Knapp verloren! Der Einsatz ist futsch, und ein Gleiter kehrt mit gebrochener Strebe heim.",
+          "unbehelligt": "Ihr taucht in eine Wolkenbank und lasst die Bande hinter euch. Sicher ist sicher."
+        }
+      },
+      "aetherquelle": {
+        "title": "Die Aetherquelle",
+        "text": "Aus einem Spalt in einem Felsbrocken rinnt schimmernder, flüssiger Aether und verdunstet im Wind. Ein seltener Anblick – und eine Versuchung.",
+        "choices": {
+          "schoepfen": "Behutsam abschöpfen",
+          "aufstauen": "Die Quelle aufstauen"
+        },
+        "results": {
+          "volleFlaschen": "Flasche um Flasche füllt sich mit reinem Aether. Ein ruhiger, wertvoller Tag.",
+          "reicheErnte": "Der Damm hält! Über Stunden sammelt sich ein kleiner See – eine prächtige Aether-Ernte.",
+          "quelleVersiegt": "Der Druck sucht sich einen neuen Weg: Die Quelle versiegt vor euren Augen. Nur wenige Tropfen bleiben."
+        }
+      },
+      "alteBibliothek": {
+        "title": "Die alte Bibliothek",
+        "text": "Halb im Fels versunken liegt eine Bibliothek der Alten. Durch geborstene Kuppeln wehen Seiten wie Schneeflocken. Vieles ist verloren – aber nicht alles.",
+        "choices": {
+          "kartenBergen": "Karten und Pläne bergen",
+          "archivDurchsuchen": "Das versiegelte Archiv öffnen"
+        },
+        "results": {
+          "neueRouten": "Die geborgenen Karten zeigen sichere Routen und vergessene Lager. Das zahlt sich sofort aus.",
+          "verboteneFormel": "Im Archiv: eine Abhandlung über Aetherbindung! Ein Schatz an Wissen – und ein Beutel Aetherstaub als Beigabe.",
+          "staubUndAsche": "Das Siegel bricht, doch dahinter ist alles längst zu Staub zerfallen. Immerhin: Die Regale taugen als Brennholz."
+        }
+      },
+      "wolkenwale": {
+        "title": "Die Wolkenwale",
+        "text": "Eine Herde Wolkenwale zieht majestätisch durchs Blau. Auf ihren Rücken wachsen ganze Gärten aus Windkraut – und ihr Sog öffnet Schneisen im Nebel.",
+        "choices": {
+          "imWindschatten": "Im Windschatten mitfliegen",
+          "anlanden": "Auf einem Rücken anlanden",
+          "ziehenLassen": "Die Herde ziehen lassen"
+        },
+        "results": {
+          "krautgaerten": "Im Sog der Wale sammelt ihr mühelos treibendes Windkraut ein – die Netze sind schnell voll.",
+          "walruecken": "Der Große duldet euch! Seine Rückengärten sind voller Früchte, und in seinen Furchen glitzert Aether.",
+          "abgeschuettelt": "Der Wal taucht ab! Ein Gleiter wird abgeworfen und muss aufgegeben werden. Die Herde verschwindet im Grau.",
+          "stillerGruss": "Ihr fliegt ein Stück in ehrfürchtigem Abstand mit. Am Abend findet ihr eine ruhige, kleine Beute."
+        }
+      },
+      "gestrandeteHaendlerin": {
+        "title": "Die gestrandete Händlerin",
+        "text": "Auf einem winzigen Felsen hockt eine Händlerin neben ihrem havarierten Lastengleiter. Sie winkt mit beiden Armen – und deutet dann vielsagend auf ihre pralle Fracht.",
+        "choices": {
+          "helfen": "Bei der Reparatur helfen",
+          "frachtKaufen": "Die Fracht günstig abkaufen"
+        },
+        "results": {
+          "dankbarkeit": "Gemeinsam ist der Gleiter schnell geflickt. Zum Dank überlässt sie euch Waren und eine Phiole Aether – und merkt sich eure Insel.",
+          "schnaeppchen": "Sie verkauft in ihrer Notlage weit unter Wert. Ein sattes Geschäft – auch wenn ihr Blick euch noch lange verfolgt.",
+          "ladenhueter": "Zuhause zeigt sich: Die Hälfte der Kisten enthält wertlosen Plunder. Sie war gerissener als gedacht."
+        }
+      },
+      "splitterinsel": {
+        "title": "Die Splitterinsel",
+        "text": "Ein Inselsplitter voller glitzernder Erzadern sinkt langsam dem Wolkenmeer entgegen. In wenigen Stunden ist er verloren – was ihr holt, muss schnell gehen.",
+        "choices": {
+          "randAbbauen": "Die Ränder abbauen",
+          "kernSprengen": "Den Kern aufbrechen"
+        },
+        "results": {
+          "sichereAusbeute": "Ihr schlagt die äußeren Adern frei und seid längst fort, als der Splitter kippt. Solide Ausbeute.",
+          "erzregen": "Der Kern birst in einem Regen aus Erz und Nebelstein! Die Gleiter fangen auf, was die Netze halten.",
+          "kollaps": "Der Splitter zerbricht zu früh! Gleiter stürzen mit ins Grau – die Überlebenden retten nur Reste."
+        }
+      },
+      "stillerTurm": {
+        "title": "Der stille Turm",
+        "text": "Ein Turm der Alten ragt reglos aus den Wolken. Keine Vögel, kein Wind, kein Laut – nur eine offene Tür und ein schwaches Pulsieren tief im Inneren.",
+        "choices": {
+          "schwelleWachen": "An der Schwelle lagern und tauschen",
+          "hinabsteigen": "Dem Pulsieren nach unten folgen"
+        },
+        "results": {
+          "friedlicherHandel": "Reisende nutzen den Turm als Rastplatz. Ihr tauscht Waren, Geschichten und ein paar Aetherkörner.",
+          "herzkammer": "Tief unten schlägt eine Herzkammer aus reinem Aether! Ihr füllt jede Flasche – ein legendärer Fund.",
+          "tuerFaelltZu": "Die Tür fällt hinter dem Vortrupp zu! Bis sich der Mechanismus löst, vergehen Stunden – ein Gleiter bleibt verschollen."
+        }
+      }
+    },
+    "quests": {
+      "title": "Aufgabe",
+      "allDone": "Alle Aufgaben erledigt – dein Reich wächst! Weitere Kapitel folgen mit dem nächsten Update.",
+      "reward": "Belohnung",
+      "claim": "Belohnung abholen",
+      "open": "Noch offen",
+      "windmuehle2": "Baue die Windmühle auf Stufe 2 aus.",
+      "hain2": "Baue den Wolkenhain auf Stufe 2 aus.",
+      "nebelbruch1": "Errichte den Nebelbruch.",
+      "dock2": "Baue das Himmelsdock auf Stufe 2 aus.",
+      "wachtturm1": "Errichte den Wachtturm.",
+      "werft1": "Errichte die Gleiterwerft.",
+      "gleiter3": "Bilde 3 Gleiter aus.",
+      "expedition1": "Schließe deine erste Expedition ab.",
+      "dock3": "Baue das Himmelsdock auf Stufe 3 aus.",
+      "kollektor1": "Errichte den Aetherkollektor.",
+      "korn2000": "Sammle insgesamt 2.000 Luftkorn.",
+      "segen1": "Wirke deinen ersten Segen.",
+      "dock4": "Baue das Himmelsdock auf Stufe 4 aus."
+    },
+    "blessings": {
+      "title": "Segen",
+      "hint": "Dauerhafte Boni – bezahlt mit Aether aus Expeditionen, Aufgaben und dem Kollektor.",
+      "rueckenwind": {
+        "name": "Rückenwind",
+        "desc": "+10 % Produktion je Stufe"
+      },
+      "fleissigeHaende": {
+        "name": "Fleißige Hände",
+        "desc": "−10 % Bauzeit je Stufe"
+      },
+      "weitblick": {
+        "name": "Weitblick",
+        "desc": "+15 % Expeditionsbeute je Stufe"
+      },
+      "zweiterBautrupp": {
+        "name": "Zweiter Bautrupp",
+        "desc": "Ein zweiter Bau gleichzeitig"
+      }
+    },
+    "stats": {
+      "title": "Statistik",
+      "age": "Tag {{days}}",
+      "dock": "Dock Stufe {{level}}",
+      "quests": "Aufgaben {{done}}/{{total}}",
+      "expeditions": "{{count}} Expeditionen",
+      "lifetime": "{{amount}} gesamt"
+    },
+    "chronicle": {
+      "title": "Inselchronik",
+      "welcome": "Eine namenlose Insel erhebt sich aus dem Wolkenmeer. Deine Geschichte beginnt.",
+      "buildFinished": "{{building}} auf Stufe {{level}} fertiggestellt.",
+      "expeditionArrived": "Expedition aus {{tier}} zurückgekehrt – ein Ereignis wartet.",
+      "expeditionResolved": "Expedition ins Gebiet {{tier}} abgeschlossen.",
+      "gleiterTrained": "{{count}} Gleiter ausgebildet.",
+      "questDone": "Aufgabe erledigt: {{quest}}",
+      "blessing": "Segen gewirkt: {{blessing}} (Stufe {{level}})"
+    },
+    "offline": {
+      "title": "Willkommen zurück!",
+      "away": "Du warst {{duration}} fort. Deine Insel war fleißig:",
+      "builds": "{{count}} Ausbau(ten) fertiggestellt",
+      "expeditions": "{{count}} Expedition(en) zurückgekehrt",
+      "continue": "Weiter geht's"
+    },
+    "profile": {
+      "islandName": "Name deiner Insel",
+      "guest": "Gast",
+      "guestHint": "Du spielst ohne Konto. Erstelle später eines, um deinen Spielstand online zu sichern.",
+      "localOnly": "Dein Spielstand liegt sicher auf diesem Gerät.",
+      "accountHint": "Angemeldet – bereit für kommende Online-Funktionen."
+    },
+    "settings": {
+      "saveTitle": "Spielstand",
+      "resetHint": "Setzt die Insel komplett zurück. Das kann nicht rückgängig gemacht werden.",
+      "resetTitle": "Spielstand zurücksetzen",
+      "resetMessage": "Deine Insel, alle Gebäude und dein gesamter Fortschritt gehen unwiderruflich verloren. Bist du sicher?",
+      "resetConfirm": "Ja, alles zurücksetzen"
+    },
+    "errors": {
+      "notEnoughResources": "Nicht genug Ressourcen.",
+      "notEnoughAether": "Nicht genug Aether.",
+      "queueFull": "Dein Bautrupp ist bereits beschäftigt.",
+      "dockLimit": "Das Himmelsdock muss zuerst ausgebaut werden.",
+      "maxLevel": "Höchste Stufe erreicht.",
+      "locked": "Noch nicht freigeschaltet.",
+      "notEnoughGleiter": "Nicht genug Gleiter auf der Insel.",
+      "gleiterCap": "Gleiter-Limit erreicht – baue die Werft aus.",
+      "towerTooLow": "Der Wachtturm ist dafür zu niedrig.",
+      "expeditionSlotsFull": "Alle Expeditionsplätze sind belegt.",
+      "expeditionNotReady": "Diese Expedition ist noch nicht bereit.",
+      "invalidChoice": "Ungültige Auswahl.",
+      "questNotReady": "Die Aufgabe ist noch nicht erfüllt.",
+      "blessingMax": "Dieser Segen ist bereits voll ausgebaut.",
+      "invalidName": "Bitte gib einen Namen mit 1–24 Zeichen ein."
+    }
   }
 }

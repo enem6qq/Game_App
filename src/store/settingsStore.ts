@@ -8,8 +8,15 @@ export type Language = 'de' | 'en';
 type SettingsState = {
   themePreference: ThemePreference;
   language: Language;
+  /**
+   * Gast-Modus: Das Spiel läuft komplett lokal ohne Konto.
+   * Wird hier (persistiert) statt im authStore gehalten, damit die
+   * Entscheidung einen App-Neustart überlebt.
+   */
+  guestMode: boolean;
   setThemePreference: (value: ThemePreference) => void;
   setLanguage: (value: Language) => void;
+  setGuestMode: (value: boolean) => void;
 };
 
 /**
@@ -22,8 +29,10 @@ export const useSettingsStore = create<SettingsState>()(
     (set) => ({
       themePreference: 'system',
       language: 'de',
+      guestMode: false,
       setThemePreference: (value) => set({ themePreference: value }),
       setLanguage: (value) => set({ language: value }),
+      setGuestMode: (value) => set({ guestMode: value }),
     }),
     {
       name: 'settings',

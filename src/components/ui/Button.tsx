@@ -6,8 +6,9 @@ import {
   type PressableProps,
 } from 'react-native';
 
-import { Text } from './Text';
 import { useTheme } from '@/theme/ThemeProvider';
+
+import { Text } from './Text';
 
 type Variant = 'primary' | 'secondary' | 'danger' | 'ghost';
 

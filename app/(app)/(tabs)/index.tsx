@@ -1,46 +1,54 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
-import { Card, Screen, Text } from '@/components/ui';
-import { useAuth } from '@/features/auth/useAuth';
-import { useNotifications } from '@/hooks/useNotifications';
-import { logger } from '@/lib/logger';
+import { Screen, Text } from '@/components/ui';
+import { BuildingCard } from '@/features/game/components/BuildingCard';
+import { ErrorNotice } from '@/features/game/components/ErrorNotice';
+import { OfflineSummaryModal } from '@/features/game/components/OfflineSummaryModal';
+import { QuestCard } from '@/features/game/components/QuestCard';
+import { ResourceBar } from '@/features/game/components/ResourceBar';
+import { SkyBanner } from '@/features/game/components/SkyBanner';
+import { BUILDING_IDS, queueSlots } from '@/features/game/engine';
+import { useGameStore } from '@/features/game/store';
 
 /**
- * Start-Bildschirm. Guter Ort für eine Übersicht/Dashboard.
- * Registriert beim Öffnen die Push-Benachrichtigungen.
+ * Herzstück des Spiels: die eigene Himmelsinsel.
+ * Wetter/Wind, Ressourcen, aktuelle Aufgabe und alle Gebäude.
  */
-export default function HomeScreen() {
+export default function IslandScreen() {
   const { t } = useTranslation();
-  const { user } = useAuth();
-  const { token } = useNotifications();
+  const state = useGameStore((s) => s.state);
 
-  useEffect(() => {
-    if (token) logger.debug('Push-Token', token);
-  }, [token]);
+  const islandName = state.islandName || t('game.island.defaultName');
 
   return (
     <Screen scroll>
-      <Text variant="h1">{t('tabs.home')}</Text>
+      <OfflineSummaryModal />
+      <ErrorNotice />
+
+      <Text variant="h1">🏝️ {islandName}</Text>
       <Text muted style={styles.subtitle}>
-        {user?.email}
+        {t('game.island.queue', {
+          used: state.queue.length,
+          slots: queueSlots(state),
+        })}
       </Text>
 
-      <View style={styles.grid}>
-        <Card>
-          <Text variant="h3">👋</Text>
-          <Text muted>
-            Dies ist deine Start-Vorlage. Ersetze diesen Bereich durch dein
-            eigenes Dashboard.
-          </Text>
-        </Card>
+      <View style={styles.stack}>
+        <SkyBanner />
+        <ResourceBar />
+        <QuestCard />
+
+        {BUILDING_IDS.map((id) => (
+          <BuildingCard key={id} building={id} />
+        ))}
       </View>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  subtitle: { marginTop: 4, marginBottom: 24 },
-  grid: { gap: 16 },
+  subtitle: { marginTop: 4, marginBottom: 16 },
+  stack: { gap: 12, paddingBottom: 24 },
 });

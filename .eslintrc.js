@@ -16,5 +16,13 @@ module.exports = {
       },
     ],
   },
-  ignorePatterns: ['node_modules/', '.expo/', 'dist/', 'babel.config.js'],
+  // supabase/functions läuft unter Deno (URL-Imports) – nicht mit dem
+  // App-Setup linten.
+  ignorePatterns: [
+    'node_modules/',
+    '.expo/',
+    'dist/',
+    'babel.config.js',
+    'supabase/functions/',
+  ],
 };

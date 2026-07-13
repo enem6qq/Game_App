@@ -11,7 +11,7 @@ import { useAuth } from '@/features/auth/useAuth';
  * - Nicht angemeldet -> Login.
  */
 export default function Index() {
-  const { initializing, isAuthenticated } = useAuth();
+  const { initializing, canEnter } = useAuth();
 
   if (initializing) {
     return (
@@ -21,7 +21,7 @@ export default function Index() {
     );
   }
 
-  return <Redirect href={isAuthenticated ? '/(app)/(tabs)' : '/(auth)/login'} />;
+  return <Redirect href={canEnter ? '/(app)/(tabs)' : '/(auth)/login'} />;
 }
 
 const styles = StyleSheet.create({
